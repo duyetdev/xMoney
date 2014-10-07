@@ -1,0 +1,96 @@
+body {
+  background-color: #fff;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  height: 100%;
+  width: 100%
+} 
+
+.ng-dirty input.ng-invalid, input.ng-invalid, textarea.ng-invalid {
+  border-color: #ccc;
+}
+
+.app-body {
+  display: table;
+  width: 100%;
+}
+
+.container {
+  height:90%;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .form-signin-heading {
+  font-weight: 100;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.app-content-loading {
+  text-align: center;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index:99;
+  background-color: #fff;
+}
+
+.loading-spinner {
+  position: absolute;
+  font-size: 50px;
+  left: 50%;
+  top: 50%;
+  margin-left: -25px;
+  margin-top: -25px;
+}
+
+.btn {
+  border-radius: 0;
+}
+.btn-primary {
+  background-color: #006EE6;
+}
+
+.xmoney-logo {
+  font-size: 1.5em;
+  font-weight: 500;
+  color: #fff;
+  background: #22A7B3;
+  display: inline-block;
+  padding: 5px;
+  font-family: Roboto;
+}
+.xmoney-logo:first-letter {
+  font-weight: 100;
+}

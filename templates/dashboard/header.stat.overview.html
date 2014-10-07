@@ -1,0 +1,49 @@
+<div class="row">
+	<div class="col-lg-6 stat-over-view-choose">
+		<a href="#last7day" ng-class="{current:stat_overview_mode=='last7day'}" ng-click="loadStatOverview('last7day')">Last 7 days</a>
+		<a href="#last30day" ng-class="{current:stat_overview_mode=='last30day'}" ng-click="loadStatOverview('last30day')">Last 30 days</a>
+		<a href="#thismonth" ng-class="{current:stat_overview_mode=='thismonth'}" ng-click="loadStatOverview('thismonth')">This month</a>
+	</div>
+	<div class="col-lg-6 add-new-transaction text-right">
+		<a href="#add-new-transaction" ng-click="openModalNewTransaction()">+ transaction </a>
+	</div>
+</div>
+<div class="row">
+	<div class="col-lg-3 col-sm-6 col-xs-6 col-xxs-12">
+		<div class="smallstat box">
+			<div class="boxchart-overlay yellow">
+				<div class="boxchart stat-num-of-transaction">Loading</div>
+			</div>
+			<span class="title">Transactions</span>
+			<span class="value">## dashboard.stat.num_of_transaction ? dashboard.stat.num_of_transaction : 0 ##</span>
+		</div>
+	</div><!--/col-->
+		
+	<div class="col-lg-3 col-sm-6 col-xs-6 col-xxs-12">
+		<div class="smallstat box money">
+			<div class="boxchart-overlay red">
+				<div class="boxchart stat-expense-transaction">Loading</div>
+			</div>
+			<span class="title">Expense</span>
+			<span class="value">## dashboard.stat.expense_value ? dashboard.stat.expense_value : 0 | number ##</span>
+		</div>
+	</div><!--/col-->
+			
+	<div class="col-lg-3 col-sm-6 col-xs-6 col-xxs-12">
+		<div class="smallstat box money">
+			<div class="boxchart-overlay blue">
+				<div class="boxchart stat-income-transaction">Loading</div>
+			</div>
+			<span class="title">Income</span>
+			<span class="value">## dashboard.stat.income_value ? dashboard.stat.income_value : 0 | number ##</span>
+		</div>
+	</div><!--/col-->
+				
+	<div class="col-lg-3 col-sm-6 col-xs-6 col-xxs-12">
+		<div class="smallstat box money">
+			<i class="fa fa-money green"></i>
+			<span class="title">Account</span>
+			<span class="value">## dashboard.stat.account ? dashboard.stat.account : 0 | number ##</span>
+		</div>
+	</div><!--/col-->
+</div>

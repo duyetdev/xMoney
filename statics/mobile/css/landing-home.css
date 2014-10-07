@@ -1,0 +1,134 @@
+/*
+*  html5 doctor css reset | http://html5doctor.com/html-5-reset-stylesheet
+*/
+html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}
+body{line-height:1}
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}
+nav ul{list-style:none}
+blockquote,q{quotes:none}
+blockquote:before,blockquote:after,q:before,q:after{content:none}
+a{margin:0;padding:0;font-size:100%;vertical-align:baseline;background:transparent}
+ins{background-color:#ff9;color:#000;text-decoration:none}
+mark{background-color:#ff9;color:#000;font-style:italic;font-weight:bold}
+del{text-decoration:line-through}
+abbr[title],dfn[title]{border-bottom:1px dotted;cursor:help}
+table{border-collapse:collapse;border-spacing:0}
+hr{display:block;height:1px;border:0;border-top:1px solid #ccc;margin:1em 0;padding:0}
+input,select{vertical-align:middle}
+
+
+
+/* ---------- */
+body {
+	position: relative;
+	background: #212124 url(../images/bg.jpg);
+	background-position: 50% 100%;
+	background-size: cover;
+	background-repeat: no-repeat;
+	font-family: "Helvetica Neue", helvetica, verdana, arial, sans-serif;
+	font-size: 20px;
+	color: #fff;
+	font-weight: 400;
+	padding: 20px 0px 0px 0px;
+	text-align: center;
+	-webkit-font-smoothing: antialiased;
+	text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+	font-kerning: normal;
+	font-family: "Roboto", sans-serif!important;
+	
+}
+.container-landing {
+	overflow: auto;
+	font-family: Roboto;
+}
+.container-landing {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	min-height: 350px;
+}
+.container-landing  .landing-page {
+	width: 95%;
+	margin: 0 auto;
+	display: table;
+	height: 100%;
+}
+.landing-page .header, 
+.landing-page .main, 
+.landing-page .footer {
+	display: table-row;
+	width: 100%;
+	text-align: center;
+	vertical-align: middle;
+}
+.landing-page .header {
+	height: 20%;
+}
+.landing-page .header h1, 
+.landing-page .header h2 {
+	font-weight: 300;
+	letter-spacing: 1px;
+}
+.landing-page .header h1 {
+	font-size: 28px;
+}
+.landing-page .header h2 {
+	font-size: 15px;
+	margin-top: 3px;
+}
+
+.landing-page .main {
+
+	
+}
+.landing-page .main ul {
+	margin: 15px 0px 15px 0px;
+	list-style: none;
+}
+.landing-page .main ul li, 
+.landing-page .main ul li span,
+.landing-page .main ul li em {
+	min-height: 68px;
+}
+.landing-page .main ul li, 
+.landing-page .main ul li span,
+.landing-page .main ul li img {
+	vertical-align: top;
+}
+.landing-page .main ul li span {
+	display: inline-block;
+	width: 80px;
+	text-align: center;
+}
+.landing-page .main ul li em {
+	display: inline-block;
+	font-size: 14.5px;
+	line-height: 17px;
+	font-style: normal;
+	width: 11em;
+	text-align: left;
+	font-weight: 300;
+	letter-spacing: 1px;
+}
+
+.landing-page .main div .login-button {
+	display: inline-block;
+	color: #fff;
+	background: rgb(4,143,217);
+	font-size: 18px;
+	margin: 0px auto;
+	padding: 0.6em 1em;
+	text-align: center;
+	border-radius: 2px;
+	min-width: 240px;
+	max-width: 480px;
+
+}
+
+.landing-page .footer {
+	height: 5%;	
+	font-size: 12px;
+}
+.landing-page .footer a {
+color: #ffffff;
+}

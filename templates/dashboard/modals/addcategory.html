@@ -1,0 +1,46 @@
+<div class="modal fade bs-add-category-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Add new category</h4>
+      </div>
+      <form class="form-horizontal" ng-submit="saveNewTransaction()" role="form">
+        <div class="modal-body">
+          
+            <p ng-if="dashboard.new_category_error" class="alert alert-danger">
+                <span ng-repeat="(field, message) in dashboard.new_category_error">
+                  ## '#'+field ##: <span ng-repeat="item in message">## item ##</span> <br>
+                </span>
+            </p>
+
+            <div class="form-group">
+              <label for="cattype" class="col-sm-3 control-label"></label>
+              <div class="col-sm-8">
+                <input type="checkbox" name="cattype" id="cattype" ng-model="dashboard.new_category.type" />
+              </div>
+            </div>
+          
+            <div class="form-group">
+              <label for="cattext" class="col-sm-3 control-label">Category name</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" ng-model='dashboard.new_category.text' id="cattext" placeholder="Shopping...">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="caticon" class="col-sm-3 control-label">Icon</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" ng-model='dashboard.new_category.icon' id="caticon" placeholder="">
+              </div>
+            </div>
+            
+          
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

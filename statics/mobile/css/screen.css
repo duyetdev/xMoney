@@ -1,0 +1,789 @@
+body {
+	font-family: "Roboto", sans-serif;
+	font-weight: 300;
+  -webkit-text-size-adjust: none;
+  -moz-text-size-adjust: none;
+  -ms-text-size-adjust: none;
+}
+.sidebar-left {
+  background: #5DB13C;
+}
+div#nothing-here {
+	text-align: center;
+	padding: 20px;
+}
+.updateAnnounce {
+  position: absolute;
+  width: auto;
+  display: block;
+  height: auto;
+  text-align: center;
+  top: 0;
+  left: 1%;
+  z-index: 999;
+  background: #FFAD00;
+  color: #fff;
+  padding: 5px 25px;
+  border-radius: 0 0 5px 5px;
+}
+div#nothing-here h1 {
+	text-align: center;
+	font-size: 4em;
+	font-weight: 100;
+}
+.app-content-loading {
+  text-align: center;
+  height: 100%;
+  width: 100%;
+  background-color: #fff;
+  position: relative;
+}
+
+.loading-spinner {
+  position: absolute;
+  font-size: 50px;
+  left: 50%;
+  top: 50%;
+  margin-left: -25px;
+  margin-top: -25px;
+}
+
+.me-info-table {}
+
+.me-info-table tr td {
+  text-align: right;
+}
+.me-info-table tr td.title {
+  text-align: left;
+}
+.scrollable-content {
+  background-color: #fff;
+}
+
+span.input-group-addon.expense {
+  background: #F87C09;
+  color: #fff;
+  border-color: #F87C09;
+}
+span.input-group-addon.expense.income {
+  background: #43A053 !important;
+  border-color: #43A053 !important;
+}
+table.table.add-transac tr td.amount-td {
+  height: 70px;
+}
+table.table.add-transac tr td.amount-td .value-amount {
+  font-size: 3em;
+  height: 100%;
+}
+
+
+table.table.me-info-table tr td {
+  border-top: none;
+  height: 4em;
+}
+
+table.table.add-transac {
+
+}
+table.table.add-transac tr td:nth-child(2) {
+  border-bottom: 1px solid #ccc;
+}
+
+table.table.add-transac tr td.note-input input{
+  text-align: left;
+  font-size: 2em;
+  height: 100%;
+  color: #8C8C8C;
+}
+table.table.add-transac .category-description {
+  font-size: 2em;
+}
+td.category-icon span {
+  font-size: 3em;
+}
+td.category-icon {
+  text-align: right;
+}
+
+table.table.add-transac tr td {
+  vertical-align: middle;
+  padding: auto 0;
+  margin: 0;
+  height: 75px !important;
+  padding: 5px;
+}
+table.table.add-transac tr td .form-group {
+  padding: 0;
+}
+table.table.add-transac tr td .form-group .value-amount {
+  text-align: right
+} 
+
+table.table.add-transac tr td:first-child {
+  padding-right: 5%;
+  padding-left: 5%;
+}
+table.table.add-transac tr td span {
+  border: 0;
+  padding-left: 0;
+  margin-left: 0;
+}
+table.table.add-transac tr td input {
+  border:none;
+  margin-left: 0;
+  padding-left: 0;
+  margin-right: 0;
+  padding-right: 0;
+  text-align: right;
+}
+
+
+.add-account {
+  margin: 0 auto;
+}
+
+.add-account label {
+  font-weight: 300;
+}
+
+.add-account-name, .add-account-amount {
+  height: 3em;
+  font-size: 2em;
+  padding: 0.5em;
+}
+
+/* Account/Wallet Manager */
+.wallet-list tr td {
+  vertical-align: middle;
+}
+.wallet-list .id {
+  width: 3%;
+}
+.wallet-list .note {
+  font-style: italic;
+}
+.wallet-list .name {
+  
+}
+.wallet-list .currency {
+  text-align: center;
+}
+
+.wallet-list .set-default:hover {
+  background: #cccccc;
+}
+.wallet-list .is-default {
+  width: 3%;
+}
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+  border-top:none;
+}
+
+div.xmoney-dialog {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 9999;
+  background: #fff;
+  top: 0%;
+  left: 0%;
+  padding: 0%;
+  box-shadow: 0 0 37px;
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
+}
+
+div.xmoney-dialog.small-dialog {
+    width: 80%;
+    height: 80%;
+    top: 10%;
+    left: 10%;
+}
+
+div.xmoney-dialog.moreOptions {
+  z-index: 120000;
+  width: 80%;
+  height: 80%;
+  top: 10%;
+  left: 10%;
+}
+
+div.xmoney-dialog.moreOptions .content {
+  padding: 2%;
+}
+
+div.xmoney-dialog .footer, div.xmoney-dialog.moreOptions .footer {
+  width: 100%;
+  height: 12%;
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 3%;
+}
+div.xmoney-dialog .footer .left, div.xmoney-dialog .footer .mid, div.xmoney-dialog .footer .right {
+  display: block;
+  width: 31.33333333%;
+  float: left;
+}
+div.xmoney-dialog.moreOptions .footer .btn {
+  display: block;
+  width: 90%;
+  margin: 0 auto;
+}
+
+div.xmoney-dialog .header {
+  display: block;
+  width: 100%;
+  height: 45px;
+  text-align: center;
+  padding: 10px;
+  margin: 0;
+  line-height: 2em;
+  border-bottom: 1px solid #EBEBEB;
+  cursor: default;
+}
+
+div.xmoney-dialog .content {
+  padding: 1%;
+}
+
+div.xmoney-dialog .content span.account-item,
+div.xmoney-dialog .content span.category-item {
+  display: block;
+  width: 90%;
+  height: 3em;
+  float: left;
+  margin: 5px 10px;
+  padding: 10px;
+  /* box-shadow: 0 0 10px #B1B1B1; */
+  line-height: 1.5em;
+  cursor: pointer;
+  margin-right: 1.2em;
+}
+
+div.xmoney-dialog .content span.category-item .icon {
+  display: inline-block;
+  width: 24px;
+}
+div.xmoney-dialog .content span.category-item .icon i {
+  font-size: 1.4em;
+}
+div.xmoney-dialog .content span.category-item .description {
+  
+}
+
+div.xmoney-dialog .content span.repeat-item {
+  display: block;
+  width: 45%;
+  height: 2.5em;
+  float: left;
+  margin: 5px;
+  padding: 5px;
+  box-shadow: 0 0 10px #B1B1B1;
+  line-height: 1.75em;
+  cursor: pointer;
+  text-align: center;
+}
+
+div.xmoney-dialog .content span.account-item:hover,
+div.xmoney-dialog .content span.category-item:hover,
+div.xmoney-dialog .content span.repeat-item:hover {
+  color: #181818;
+  background: #F2F2F2;
+}
+
+.income-expense-switch {}
+.income-expense-switch button {
+  border: none;
+}
+
+.close-dialog {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: .6em;
+  opacity: .5;
+  cursor: pointer;
+}
+.close-dialog:hover {
+  opacity: 1;
+}
+.close-dialog i.fa.fa-times {
+  font-size: 2em;
+  font-weight: 100;
+}
+
+.btn {
+  border-radius: 0;
+}
+.btn-primary {
+  background-color: #006EE6;
+}
+
+.add-trans-button {
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  display: table-cell;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  font-size: 1.6em;
+  vertical-align: middle;
+  color: #fff;
+  background: #0F9FFF;
+  z-index: 99999;
+  box-shadow: 0 0 18px hsla(0, 0%, 0%, 0.25);
+  border: 3px solid #fff;
+  line-height: 2em;
+  cursor: pointer;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;  
+}
+a .add-trans-button {
+  color: #fff;
+  font-weight: 100;
+}
+
+// ----- DASHBOARD ------
+div#dashboard-header {
+  padding: 10px;
+
+}
+.header-stat {
+  position: absolute;
+  z-index: 99;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+#dashboard-header div#main-header, #dashboard-header .goto-pre-month, #dashboard-header .goto-next-month {
+  background: #FAFAFA;
+  height: 70px;
+  text-align: center;
+  width: 90%;
+  margin: 0 auto;
+  padding: 0;
+  float: left;
+  display: table-cell;
+  vertical-align: middle;
+  cursor: default;
+}
+
+#dashboard-header .goto-pre-month, #dashboard-header .goto-next-month {
+  width: 5%;
+  border-bottom: 1px solid #ddd;
+}
+#dashboard-header .goto-pre-month i, #dashboard-header .goto-next-month i {
+  margin-top: 30px;
+}
+
+#dashboard-header div#main-header div {
+  display: block;
+  width: 25%;
+  height: 100%;
+  margin: 0;
+  float: left;
+}
+#dashboard-header div#main-header div.date {
+  padding: 0 4px;
+}
+#dashboard-header div#main-header div.date .calendar-block, 
+#dashboard-header div#main-header div .amount-block {
+  width: 90%;
+  display: block;
+  height: 90%;  
+  margin: 0 auto;
+  border: 1px solid #E9E9E9;
+  margin-top: 3.5px;
+}
+#dashboard-header div#main-header div.date .calendar-block .year{
+  height: 30%;
+  width: 100%;
+  background: #2F7AFF;
+  color: #ffffff;
+  display: table-cell;
+  vertical-align: middle;
+  font-size: 0.8em;
+}
+#dashboard-header div#main-header div.date .calendar-block .month{
+  height: 70%;
+  width: 100%;
+  color: #000000;
+  background: #ffffff;
+  display: table-cell;
+  vertical-align: middle;
+  font-size: 2em;
+}
+
+#dashboard-header div#main-header div .amount-block {
+  border: 1px solid #E9E9E9;
+  display: table-column;
+}
+
+#dashboard-header div#main-header div .amount-block .value,
+#dashboard-header div#main-header div .amount-block .label {
+  width: 100%;
+  display: table-cell;
+  vertical-align: middle;
+  color: #000000;
+  background: #ffffff;
+}
+#dashboard-header div#main-header div .amount-block .value {
+  height: 70%;
+  font-size:1.1em;
+  line-height: 3em;
+  background: #fff;
+}
+#dashboard-header div#main-header div .amount-block .label {
+  height: 30%;
+  font-size: 0.8em;
+  font-weight: 300;
+}
+#dashboard-header div#main-header div .amount-block.income .value,
+.bill-day-block .head .total-block .income-value,
+.transaction-list .item .value.income, 
+table.table.table-bordered.add-transac tr td .form-group .value-amount.income {
+  color: #1EA005;
+}
+#dashboard-header div#main-header div .amount-block.expense .value,
+.bill-day-block .head .total-block .expense-value,
+.transaction-list .item .value.expense,
+table.table.table-bordered.add-transac tr td .form-group .value-amount.expense {
+  color: #BB7000;
+}
+#dashboard-header div#main-header div .amount-block.total .value {
+  color: #161616;
+}
+
+.view-month-block {
+
+}
+
+.add-trans-block {
+  width: 100%;
+  display: block;
+  height: auto;
+  padding: 0.5em;
+}
+.add-trans-block:first-child {
+  border-bottom: 1px solid #F0F0F0;
+  padding-bottom: 1em;
+margin-bottom: 1em;
+
+}
+.add-trans-block .block-header {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  font-color: #ccc;
+  font-size: 0.9em;
+  text-transform: uppercase;
+  color: #A0A0A0;
+}
+.add-trans-block .block-body {
+  display:block;
+  width:100%;
+  height:auto;
+  font-color: #000000;
+}
+.add-trans-block .block-border {
+  
+}
+.xmoney-datepicker {
+  padding: 0;
+  margin: 0;
+}
+.xmoney-datepicker input {
+  border: none;
+  margin-left: 0;
+  padding-left: 0;
+  margin-right: 0;
+  padding-right: 0;
+  text-align: right;
+  color: transparent;
+  position: static;
+  width: 100%;
+  height: 100%;
+  display: block;
+  top: 0;
+  left: 0;
+  z-index: 90;
+}
+.xmoney-datepicker .display {
+  display: block;
+  margin-left: 0;
+  padding-left: 0;
+  margin-right: 0;
+  padding-right: 0;
+  text-align: center;
+  position: static;
+   width: 100%;
+  height: 100%;
+  display: block;
+  top: 0;
+  left: 0;
+  z-index: 80;
+}
+.xmoney-datepicker .display .day {
+  display: block;
+  height: 60%;
+  width: 100%;
+  font-size:3em;
+}
+.xmoney-datepicker .display .month-year {
+  display: block;
+  height: 40%;
+  width: 100%;
+  font-size:1em;
+}
+.amountMoney {
+  font-size: 4em;
+    color: #4CD964;
+}
+.amountMoney.income {
+  color: #4CD964;
+}
+.amountMoney.expense {
+  color: #FFCC00;
+}
+
+// ------
+div#dashboard-choose-type {
+  margin-top: 5px;
+    padding: 10px;
+  height: 35px;
+}
+.sub-header {
+  position: absolute;
+  z-index: 9999;
+  top: 70px;
+  left: 0;
+}
+
+#dashboard-choose-type #main-sub-header {
+}
+
+#main-sub-header .btn-group .btn {
+  font-weight: 100;
+  background: #fff;
+}
+
+#main-sub-header .btn-group .btn.btn-info {
+  background: #34AADC;
+  border: none;
+  font-weight: 300;
+}
+
+#main-transaction-list {
+  overflow: scroll;
+}
+
+.bill-day-block {
+
+}
+.bill-day-block .head {
+  display: block;
+  width: 100%;
+  background: #F1F1F1;
+}
+.bill-day-block .head .date-block, .bill-day-block .head .total-block {
+  display: block;
+  width: 20%;
+  height: 100%;
+  margin-bottom: 4px;
+  float: left;
+}
+.bill-day-block .head .total-block {
+  width: 78%;
+  height: 100%;
+}
+.bill-day-block .head .date-block {
+  margin-right: 1%;
+  border: 1px solid #F0F0F0;
+  box-shadow: 1px 1px 1px #ECECEC;
+  border-radius: 2px;
+}
+.bill-day-block .head div.date,
+.bill-day-block .head div.month-year {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+.bill-day-block .head div.date {
+  font-size: 1.5em;
+}
+.bill-day-block .head div.month-year {
+  font-size: 0.8em;
+  padding-bottom: 0.2em;
+}
+.bill-day-block .head .total-block .income-value,
+.bill-day-block .head .total-block .expense-value {
+  display: block;
+  width: 50%;
+  float: left;
+  height: 100%;
+  line-height: 2em;
+  text-align: center;
+  font-size: 1.2em;
+  padding-top: 0.5em;
+} 
+
+.transaction-list {}
+.transaction-list .item {
+  padding: 0;
+  font-size: 0.9em;
+}
+.transaction-list .item tr:first-child td {
+  border-top:none;
+}
+.transaction-list .item .category {}
+.transaction-list .item .note {
+  font-weight: 300;
+  font-style: italic;
+}
+.transaction-list .item .value {
+  text-align: right;
+}
+.transaction-list .item .value.income {}
+.transaction-list .item .value.expense {}
+
+/* Action */
+.itemAction {
+
+}
+.itemAction .value {
+  display: block;
+  font-size: 2em;
+  text-align: center;
+}
+.itemAction .value.income {
+  color: #15BD0E;
+}
+.itemAction .value.income:before {
+  content: '+';
+}
+.itemAction .value.expense {
+  color: #FCA523;
+}
+.itemAction .value.expense:before {
+  content: '-';
+}
+.itemAction .desciption .note:before {
+  content: '(';
+}
+.itemAction .desciption .note:after {
+  content: ')';
+}
+.itemAction .desciption .note {
+  text-indent: italic;
+}
+/* Tools */
+.tools-page {}
+.tools-page a {
+  color: #000000;
+  font-weight: 300;
+}
+
+/* Numpad */
+.numpadDialog {
+  width: 100% !important;
+  height: 100%  !important;
+  top: 0  !important;
+  left: 0  !important;
+  padding: 0  !important;
+}
+input.input-number {
+  font-size: 31px;
+  padding: 3px 10px;
+  border: 0;
+  border-bottom: 2px solid #3498db;
+  margin: 0 15px;
+  width: 96%;
+  outline: 0;
+  text-align: right;
+  border-radius: 0;
+  color: #3498db;
+}
+
+::-webkit-input-placeholder { color: #ccc; }
+:-moz-placeholder { color: #ccc; }
+::-moz-placeholder { color: #ccc; }
+:-ms-input-placeholder { color: #ccc; }
+
+#container { 
+  padding-top: 0;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  cursor: default;
+}
+
+.numpad { 
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.numpad li {
+  font-size: 32px;
+  float: left;
+  list-style: none;
+  text-align: center;
+  height: 72px;
+  padding-top: 15px;
+  width: 25%;
+  -webkit-font-smoothing: antialiased;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.numpad li[rel="*1000"] {
+  font-size:20px;
+  line-height: 2em;
+}
+
+.numpad li.ng-click-active {
+  background: #E6E6E6;
+}
+
+/* inputTextDialog */
+.inputTextDialog {
+  width: 100% !important;
+  height: 100%  !important;
+  top: 0  !important;
+  left: 0  !important;
+  padding: 0  !important;
+}
+.inputTextDialog input {
+  height: 3em;
+  border: 0;
+  border-bottom: 1px solid #EEEEE6;
+  width: 85%;
+  margin: 0 auto;
+  font-size: 2.5em;
+}
+
+/* Feedback, support */
+.feedBackContent {
+  width: 100%;
+  height: 100%;
+}
+
+/* Left panel */
+.list-group-item, a.list-group-item {
+  margin-bottom: 7px;
+  border: 0 none;
+  margin-top: 7px;
+  border-bottom: 1px solid #ddd;
+}

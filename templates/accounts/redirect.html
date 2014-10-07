@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block page_title %}Redirect...{% endblock %}
+
+{% block content %}
+Redirecting ...
+{% endblock %}
+
+{% block meta_ext %}
+	<meta http-equiv="redirect" content="0; url={{next}}">
+	<script>window.location="{{next}}"</script>
+{% endblock %}

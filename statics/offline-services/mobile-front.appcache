@@ -1,0 +1,33 @@
+CACHE MANIFEST
+# xMoney Offline Module
+
+# Explicitly cached 'master entries'.
+CACHE:	
+
+../xmoney/css/fonts.css?v=1.0.5-b01
+../mobile/css/screen.css?v=1.0.5-b01
+../mobile-angular-ui/css/mobile-angular-ui-base.min.css?v=1.0.5-b01
+../mobile/css/landing-home.css?v=1.0.5-b01
+../xmoney/css/font-awesome.min.css
+../xmoney/css/fonts/roboto/Roboto-Regular-webfont.woff
+../xmoney/css/fonts/roboto/Roboto-Regular-webfont.ttf
+../xmoney/css/fonts/roboto/Roboto-Light-webfont.woff
+../mobile-angular-ui/fonts/fontawesome-webfont.woff?v=4.1.0
+../../mobile/js/config
+../angular/angular.min.js?v=1.0.5-b01
+../angular/angular-touch.min.js?v=1.0.5-b01
+../angular/angular-route.min.js?v=1.0.5-b01
+../mobile-angular-ui/js/mobile-angular-ui.min.js?v=1.0.5-b01
+../mobile/js/angular/front.js?v=1.0.5-b01
+../mobile/js/angular/dashboard.js?v=1.0.5-b01
+
+# image
+../mobile/images/group_icon_small.png
+../mobile/images/album_icon_small.png
+../mobile/images/camera_icon_small.png
+../images/logo-144x144.png
+../images/logo-57x57.png
+
+# Resources that require the user to be online.
+NETWORK:
+*

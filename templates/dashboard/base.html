@@ -1,0 +1,77 @@
+{% load staticfiles %}{% load i18n %}<!DOCTYPE html>
+<html ng-app='xmoney-app'>
+	<head>
+		<meta charset="utf-8">
+		<title>Dashboard</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+		<link href="{% static 'db/retina.min.css' %}" rel="stylesheet">
+		<link href="{% static 'xmoney/css/fonts.css' %}" rel="stylesheet">
+		<link href="{% static 'db/bootstrap-switch.min.css' %}" rel="stylesheet">
+		{% include 'dashboard/style.html' %}
+		<!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
+		<!--[if lt IE 9]>
+		
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<script src="assets/js/respond.min.js"></script>
+		<script src="assets/css/ie6-8.css"></script>
+		
+		<![endif]-->
+		
+		<script src="{% static 'jquery/jquery-1.9.1.min.js' %}" type="text/javascript"></script>
+		<script src="{% static 'db/jquery-ui-1.10.3.custom.min.js' %}" type="text/javascript"></script>
+		<script src="{% static 'angular/angular.min.js' %}" type="text/javascript"></script>
+		<script src="{% static 'angular/angular-resource.min.js' %}" type="text/javascript"></script>
+		<script src="{% static 'angular/angular-cookies.min.js' %}" type="text/javascript"></script>
+		<script src="{% static 'bootstrap/js/bootstrap.min.js' %}" type="text/javascript"></script>
+		<script src="{% static 'db/jquery.sparkline.min.js' %}" type="text/javascript"></script>
+		<script src="{% static 'db/bootstrap-switch.min.js' %}" type="text/javascript"></script>
+		<script src="{% static 'db/script.js' %}" type="text/javascript"></script>
+		<script>
+
+		</script>
+	</head>
+	<body ng-controller='xmoney-dashboard-controller'>
+		<div class="container">
+			<div class="row">
+				<nav role="navigation">
+					<div class="navbar-header">
+						<div class="col-lg-5">
+							<a class="navbar-brand" href="/">Dashboard</a>
+						</div>
+						<div class="col-lg-3"></div>
+						<div class="col-lg-2">
+						</div>
+						<div class="col-lg-2">
+							<a href="#" class="user-menu" title="Accounts" data-toggle="dropdown">{{user.username}} <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="/accounts">Account options</a></li>
+								<li><a href="/accounts/logout">Logout</a></li>
+								<li class="divider"></li>
+								<li><a href="#">Helps</a></li>
+							</ul>
+						</div>
+					</div>
+				</nav>
+			</div>
+		</div>
+		<div class="container main-dashboard">
+			<!-- Top statictis -->
+			{% include 'dashboard/header.stat.overview.html' %}
+			
+			<!-- Second block -->
+			<div class="row">
+				{% include 'dashboard/middle.left.calendar.html' %}
+				{% include 'dashboard/middle.right.todaytable.html' %}			
+			</div>
+
+			<div class="row">
+				
+			</div>
+		</div>
+
+	{% include 'base/footer.html' %}
+	{% include 'dashboard/modals/addtransaction.html' %}
+	{% include 'dashboard/modals/addcategory.html' %}
+</body>
+</html>
