@@ -65,6 +65,9 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # min html
+    'htmlmin.middleware.HtmlMinifyMiddleware',
 )
 
 ROOT_URLCONF = 'xmoney.urls'
@@ -108,8 +111,4 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, "statics"), )
 
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 
-
-# ----------------- AUTH SETTINGS ------------------
-auth = {
-    'min_len_password': 5,
-}
+APPEND_SLASH=True 

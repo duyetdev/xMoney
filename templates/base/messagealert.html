@@ -1,0 +1,31 @@
+<style type="text/css" media="screen">
+	.alert-message {
+		width: 200px;
+		background: #fff;
+		position: fixed;
+		top: 0;
+		left: 50%;
+		border: 1px solid #fff;
+		margin-left: -100px;
+		text-align: center;
+		z-index: 99;
+	}
+
+	.alert-message.error {
+		border: 1px solid #FFCF99;
+		background: #FFD67C;
+		color: #D34800;
+	}
+	.alert-message.success {
+		border: 1px solid #227115;
+		background: #227115;
+		color: #FFFFFF;
+	}
+</style>
+
+<span ng-show="message.is_error" ng-click="message.is_error = 0" class="alert-message error">
+	## message.error ##
+</span>
+<span ng-show="message.is_success" ng-click="message.is_success = 0" class="alert-message success">
+	## message.success ##
+</span>

@@ -96,7 +96,7 @@ class Note(models.Model):
 	user = models.ForeignKey(User)
 	title = models.CharField(max_length=50)
 	note = models.TextField(max_length=500)
-	pub_date = models.DateTimeField()
+	pub_date = models.DateTimeField(auto_now=True, default=date.today())
 	is_active = models.BooleanField(default=True)
 	
 	def __unicode__(self):
@@ -130,13 +130,23 @@ class Transaction(models.Model):
 	is_repeat = models.BooleanField(default=False)
 	repeat_type = models.CharField(max_length=10, default='None', blank=True)
 	repeat_from = models.IntegerField(max_length=20, default=0)
-	next_repeat = models.DateField(default=date.today())
+	next_repeat = models.DateTimeField(default=date.today())
 	with_whom = models.CharField(max_length=50, blank=True)
-	date = models.DateField(default=date.today())
-	wallet = models.ForeignKey(Wallet,default=0)
-	event = models.ForeignKey(Event, default=0)
+	date = models.DateTimeField(default=date.today())
+	wallet = models.ForeignKey(Wallet, null=True, blank=True)
+	event = models.ForeignKey(Event, null=True, blank=True)
 	photo = ''
 	location = ''
 
 	def __unicode__(self):
 		return str(self.transaction_id)
+
+class Feedback(models.Model):
+	email = models.EmailField(max_length=255)
+	name = models.CharField(max_length=255)
+	content = models.TextField(max_length=1000)
+	date = models.DateTimeField(auto_now=True)
+	user_id = models.IntegerField(blank=True)
+
+	def __unicode__(self):
+		return self.name 

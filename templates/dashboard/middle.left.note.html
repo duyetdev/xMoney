@@ -1,0 +1,18 @@
+<div class="col-lg-3 col-md-3 col-xs-6">
+	<div class="note-list">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="day">
+					<span>Todo list &middot; {% now "d/m/Y" %}</span>
+					{% now "l" %}
+				</div>
+				<br>
+
+				<ul>
+					<li ng-repeat="item in dashboard.notes"></li>
+				</ul>
+			</div>
+		</div>
+
+	</div>
+</div>

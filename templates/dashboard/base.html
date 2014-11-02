@@ -9,53 +9,74 @@
 		<link href="{% static 'xmoney/css/fonts.css' %}" rel="stylesheet">
 		<link href="{% static 'db/bootstrap-switch.min.css' %}" rel="stylesheet">
 		<link href="{% static 'db/clndr/clndr.css' %}" rel="stylesheet">
+		<link href="{% static 'db/animate.css' %}" rel="stylesheet">
+		
 		{% include 'dashboard/style.html' %}
 		<!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
 		<!--[if lt IE 9]>
-		
-		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-		<script src="assets/js/respond.min.js"></script>
-		<script src="assets/css/ie6-8.css"></script>
-		
+		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>		
 		<![endif]-->
 		
 		<script src="{% static 'jquery/jquery-1.9.1.min.js' %}" type="text/javascript"></script>
-		<script src="{% static 'db/jquery-ui-1.10.3.custom.min.js' %}" type="text/javascript"></script>
+		
+		{# <script src="{% static 'db/jquery-ui-1.10.3.custom.min.js' %}" type="text/javascript"></script> #}
+		
 		<script src="{% static 'angular/angular.min.js' %}" type="text/javascript"></script>
 		<script src="{% static 'angular/angular-resource.min.js' %}" type="text/javascript"></script>
 		<script src="{% static 'angular/angular-cookies.min.js' %}" type="text/javascript"></script>
 		<script src="{% static 'bootstrap/js/bootstrap.min.js' %}" type="text/javascript"></script>
+		<script src="{% static 'db/iconpicker/js/bootstrap-iconpicker.js' %}" type="text/javascript"></script>
 		<script src="{% static 'db/jquery.sparkline.min.js' %}" type="text/javascript"></script>
 		<script src="{% static 'db/bootstrap-switch.min.js' %}" type="text/javascript"></script>
-		<script src="{% static 'db/script.js' %}" type="text/javascript"></script>
-		<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+		<script src="{% static 'db/angular-toggle-switch.min.js' %}" type="text/javascript"></script>
+		<script src="{% static 'db/underscore-min.js' %}"></script>
+
+
 		<script src="{% static 'db/clndr/clndr.js' %}" type="text/javascript"></script>
 		<script src="{% static 'db/clndr/moment-2.2.1.js' %}" type="text/javascript"></script>
 		<script src="{% static 'db/clndr/evnt.calendar.init.js' %}" type="text/javascript"></script>
 		
+		<script src="{% static 'db/angular-table.min.js' %}"></script>
+
+		<script src="{% static 'db/script.js' %}" type="text/javascript"></script>
 		
 		<script>
+			$(window).load(function(){
+				'use strict';
 
+				$("#loading").fadeOut("1000", function() {
+				// Animation complete
+					$('#loading img').css("display","none");
+					$('#loading').css("display","none");
+					$('#loading').css("background","none");
+					$('#loading').css("width","0");
+					$('#loading').css("height","0");
+				});
+			});
 		</script>
 	</head>
 	<body ng-controller='xmoney-dashboard-controller'>
+		<div id="loading" style="display:none"><img src="{% static 'db/loader.gif' %}" alt="Just Wait..."></div>
+		{% include 'base/noscript.html' %}
+		{% include 'base/messagealert.html' %}
+
 		<div class="container">
 			<div class="row">
 				<nav role="navigation">
 					<div class="navbar-header">
-						<div class="col-lg-5">
+						<div class="col-lg-5 col-sx-5">
 							<a class="navbar-brand" href="/">Dashboard</a>
 						</div>
-						<div class="col-lg-3"></div>
-						<div class="col-lg-2">
-						</div>
-						<div class="col-lg-2">
-							<a href="#" class="user-menu" title="Accounts" data-toggle="dropdown">{{user.username}} <b class="caret"></b></a>
+						<div class="col-lg-3 col-sx-1"></div>
+						<div class="col-lg-2 col-sx-1"></div>
+						<div class="col-lg-2 col-sx-5 text-right">
+							<a href="#" class="user-menu" title="Accounts" data-toggle="dropdown">#{{user.username}} <b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li><a href="/accounts">Account options</a></li>
 								<li><a href="/accounts/logout">Logout</a></li>
 								<li class="divider"></li>
-								<li><a href="#">Helps</a></li>
+								<li><a href="/helper/help">Helps</a></li>
 							</ul>
 						</div>
 					</div>
@@ -68,8 +89,10 @@
 			
 			<!-- Second block -->
 			<div class="row">
+				{% include 'dashboard/middle.left.note.html' %}
 				{% include 'dashboard/middle.left.calendar.html' %}
-				{% include 'dashboard/middle.right.todaytable.html' %}			
+				{% include 'dashboard/middle.right.todaytable.html' %}
+				{% include 'dashboard/bottom.center.chart.html' %}			
 			</div>
 
 			<div class="row">
@@ -79,6 +102,12 @@
 
 	{% include 'base/footer.html' %}
 	{% include 'dashboard/modals/addtransaction.html' %}
+	{% include 'dashboard/modals/edittransaction.html' %}
 	{% include 'dashboard/modals/addcategory.html' %}
+	{% include 'dashboard/modals/welcome-message.html' %}
+	{% include 'dashboard/modals/choosecategory.html' %}
+
+	{% include 'dashboard/modals/managecategory.html' %}
+	{% include 'dashboard/modals/importexport.html' %}
 </body>
 </html>

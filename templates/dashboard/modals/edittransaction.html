@@ -1,0 +1,112 @@
+<div class="modal fade bs-edit-transaction-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Edit transaction</h4>
+      </div>
+      <form class="form-horizontal" ng-submit="editTransaction()" role="form" ng-init="showOptionFields = false">
+        <div class="modal-body">
+          
+            <p ng-if="dashboard.edit_transaction_error" class="alert alert-danger">
+                <span ng-repeat="(field, message) in dashboard.edit_transaction_error">
+                  ## '#'+field ##: <span ng-repeat="item in message">## item ##</span> <br>
+                </span>
+            </p>
+
+            <div class="form-group">
+              <label for="transtype" class="col-sm-3 control-label"></label>
+              <div class="col-sm-8">
+                    <toggle-switch
+                    model="dashboard.transtype_switch"
+                    class="switch-success switch-large"
+                    on-label="Income"
+                    off-label="Expense">
+                    <toggle-switch>
+              </div>
+            </div>
+
+             <div class="form-group">
+              <label for="transval" class="col-sm-3 control-label">Category</label>
+              <div class="col-sm-8">
+                  <span class="form-control ## dashboard.new_transaction.category.id == 0 ? 'no-category' : '' ##"  ng-click="openCategoryChoose()">
+                      <i class="fa ## dashboard.new_transaction.category.icon ##"></i> 
+                      ## dashboard.new_transaction.category.text ##</span>
+                </span>
+                
+              </div>
+         
+            </div>
+
+            <div class="form-group">
+              <label for="transval" class="col-sm-3 control-label">Amount</label>
+              <div class="col-sm-8">
+                <input type="number" class="form-control" ng-model='dashboard.edit_transaction.value' id="transval" placeholder="+ 150,000">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="note" class="col-sm-3 control-label">Note</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" ng-model="dashboard.edit_transaction.note" id="note" placeholder="Please note...">
+              </div>
+            </div>
+
+          <span ng-show="showOptionFields">
+          <hr />
+          <div class="form-group">
+            <label for="datetime" class="col-sm-3 control-label">Datetime</label>
+            <div class="col-sm-8">
+              <input type="date" class="form-control" ng-model="dashboard.edit_transaction.date" id="datetime">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="wallet" class="col-sm-3 control-label">Wallet</label>
+            <div class="col-sm-8">
+              <span class="form-control">Choose one...</span>
+            </div>
+          </div>
+
+          </span>
+            
+          
+        </div>
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default" ng-click="showOptionFields = !showOptionFields"><i class="fa fa-gear"></i> Options</button>
+          <button type="button" class="btn btn-danger" ng-click="deleteConfim()">Delete</button>  
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- CONFIRM DELETE -->
+<div class="modal fade bs-delete-confirm-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Delete confim</h4>
+      </div>
+      <form class="form-horizontal" ng-submit="editTransaction()" role="form" ng-init="showOptionFields = false">
+        <div class="modal-body">
+          
+
+        Are you sure?
+        
+            
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" ng-click="deleteTransaction()">Delete</button>  
+          <button type="submit" class="btn btn-primary" data-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

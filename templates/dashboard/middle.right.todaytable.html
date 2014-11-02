@@ -1,35 +1,48 @@
-<div class="col-lg-6 col-md-6 col-xs-6">
-	<div class="today-transaction">
-		<table class="table today-table">
+<div class="col-lg-5 col-md-5 col-xs-12">
+	<div class="today-transaction" ng-init="dashboard.transaction_today = []">
+		<table class="table today-table" at-table at-paginated at-list="dashboard.transaction_today" at-config="dashboard.todayTableConfig">
 			
 			<thead>
 				<tr>
 					<th>#</th>
 					<th>Amount</th>
+					<th>Category</th>
 					<th>Note</th>
 					<th width="2%">Action</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-if="dashboard.transaction_today.length == 0">
+
+			
+
+				<!--tr ng-if="dashboard.transaction_today.length == 0">
 					<td colspan="4" class="empty">
 						Nothing today, <a href="#add-some-transaction" ng-click="openModalNewTransaction()">add some?</a> :))
 					</td>
 				</tr>
-				<tr ng-repeat="item in dashboard.transaction_today">
-					<td>## $index+1 ##</td>
-					<td>## item.value | number ##</td>
-					<td>## item.note ##</td>
-					<td>
-						<a ng-click="editTransaction(item.transaction_id)" href="#edit-transaction">
+				-->
+				<tr>
+					<td at-attribute="#">##$index+1##</td>
+					<td at-sortable at-attribute="amount">
+						## item.transaction_type == 'in'? '+' : item.value >= 0 ? '-' : '' ## ## item.value | number ##
+					</td>
+					<td at-sortable at-attribute="category" style="text-align:left">
+						<i ng-show="item.category.icon" class="## item.category.substring(0,2) == 'fa' ? 'fa' : 'glyphicon' ## ## item.category.icon ##"></i> ## item.category.text ##
+					</td>
+					<td at-attribute="note">
+						## item.note ##
+					</td>
+					<td at-attribute="action">
+						<a ng-click="openModalEditTransaction(item)" href="#edit-transaction">
 							<i class="fa fa-pencil"></i>
 						</a>
-						<a ng-click="deleteTransaction(item.transaction_id)" href="#delete-transaction">
-							<i class="fa fa-times"></i>
-						</a>
+						
 					</td>
 				</tr>
 			</tbody>
 		</table>
+
+		<at-pagination at-list="dashboard.transaction_today" at-config="dashboard.todayTableConfig" class="table-pagination"></at-pagination>
+
 	</div>
 </div>

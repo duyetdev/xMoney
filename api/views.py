@@ -6,10 +6,13 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.generics import (ListCreateAPIView, RetrieveUpdateDestroyAPIView, GenericAPIView)
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
+from rest_framework.authtoken.models import Token
 from rest_framework import mixins
 
-from django.contrib.auth.hashers import check_password, make_password
 from django.http import Http404
+from django.contrib.auth import authenticate, login, logout, get_user_model
+from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
+
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
@@ -25,6 +28,8 @@ from django.db.models import Sum
 def Auth(request):
 	return 0
 
+
+
 class LoggedInRESTAPIView(APIView):
     authentication_classes = ((SessionAuthentication, TokenAuthentication))
     permission_classes = ((IsAuthenticated,))
@@ -32,6 +37,51 @@ class LoggedInRESTAPIView(APIView):
 
 class LoggedOutRESTAPIView(APIView):
     permission_classes = ((AllowAny,))
+
+
+
+class Login(LoggedOutRESTAPIView, GenericAPIView):
+
+    """
+    Check the credentials and return the REST Token
+    if the credentials are valid and authenticated.
+    Calls Django Auth login method to register User ID
+    in Django session framework
+
+    Accept the following POST parameters: username, password
+    Return the REST Framework Token Object's key.
+    """
+
+    serializer_class = serializers.LoginSerializer
+    token_model = Token
+    token_serializer = serializers.TokenSerializer
+
+    def post(self, request):
+        # Create a serializer with request.DATA
+        serializer = self.serializer_class(data=request.DATA)
+
+        if serializer.is_valid():
+            # Authenticate the credentials by grabbing Django User object
+            user = authenticate(username=serializer.data['username'],
+                                password=serializer.data['password'])
+
+            if user and user.is_authenticated():
+                if user.is_active:
+                    login(request, user)
+
+                    # Return REST Token object with OK HTTP status
+                    token, created = self.token_model.objects.get_or_create(user=user)
+                    return Response(self.token_serializer(token).data,
+                                    status=status.HTTP_200_OK)
+                else:
+                    return Response({'error': 'This account is disabled.'},
+                                    status=status.HTTP_401_UNAUTHORIZED)
+            else:
+                return Response({'error': 'Invalid Username/Password.'},
+                                status=status.HTTP_401_UNAUTHORIZED)
+        else:
+            return Response(serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
 
 
 class Register(LoggedOutRESTAPIView, GenericAPIView):
@@ -70,9 +120,27 @@ class Register(LoggedOutRESTAPIView, GenericAPIView):
         else:
             return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
+class Logout(LoggedInRESTAPIView):
 
+    """
+    Calls Django logout method and delete the Token object
+    assigned to the current User object.
 
-class UserProfile(LoggedOutRESTAPIView, GenericAPIView):
+    Accepts/Returns nothing.
+    """
+
+    def get(self, request):
+        try:
+            request.user.auth_token.delete()
+        except:
+            pass
+
+        logout(request)
+
+        return Response({"success": "Successfully logged out."},
+                        status=status.HTTP_200_OK)
+
+class UserProfile(LoggedInRESTAPIView, GenericAPIView):
 	"""
 	Get Current User Profile Info
 	"""
@@ -100,25 +168,38 @@ class UserProfile(LoggedOutRESTAPIView, GenericAPIView):
 		else:
 			return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@login_required
-@api_view(['PUT'])
-def UserChangePassword(request):
-	try:
-		user = User.objects.get(pk=request.user.id)
-	except:
-		return Response(status=404)
 
-	current_password = request.DATA.get('currentpassword', '')
-	new_password = request.DATA.get('newpassword', '')
-	confirm_password = request.DATA.get('confirmpassword', '')
+class PasswordChange(LoggedInRESTAPIView, GenericAPIView):
 
-	if new_password != confirmpassword:
-		return Response({'message': 'Please confirm password'})
+    """
+    Calls Django Auth SetPasswordForm save method.
 
-	elif check_password(current_password, user.password) == False:
-		return Response({'message': 'Wrong password'})
+    Accepts the following POST parameters: new_password1, new_password2
+    Returns the success/fail message.
+    """
 
-	return Response(status=404)
+    serializer_class = serializers.SetPasswordSerializer
+
+    def post(self, request):
+        # Create a serializer with request.DATA
+        serializer = self.serializer_class(data=request.DATA)
+
+        if serializer.is_valid():
+            # Construct the SetPasswordForm instance
+            form = SetPasswordForm(user=request.user, data=serializer.data)
+
+            if form.is_valid():
+            	form.save()
+
+                # Return the success message with OK HTTP status
+                return Response({"success": "New password has been saved."}, status=status.HTTP_200_OK)
+
+            else:
+            	return Response(form._errors, status=status.HTTP_400_BAD_REQUEST)
+
+        else:
+        	return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 """
 	API get list transactions
@@ -133,17 +214,9 @@ def UserChangePassword(request):
 class TransactionOverview(LoggedInRESTAPIView, GenericAPIView):
 	serializer_class = serializers.TransactionSerializer
 
-	def post(self, request):
-		serializer = self.serializer_class(data=request.DATA)
-		if serializer.is_valid():
-			serializer.save()
-			return Response(serializer.data, status=status.HTTP_201_CREATED)
-		else:
-			return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 	def get(self, request):
 		today = date.today()
-		day 	= request.QUERY_PARAMS.get('day', None)
+		day 	= request.QUERY_PARAMS.get('day', today.day)
 		month 	= request.QUERY_PARAMS.get('month', today.month)
 		year 	= request.QUERY_PARAMS.get('year', today.year)
 		limit 	= request.QUERY_PARAMS.get('limit', None)
@@ -151,15 +224,26 @@ class TransactionOverview(LoggedInRESTAPIView, GenericAPIView):
 		if month == 'current':
 			month = today.month
 
-		transaction_list = models.Transaction.objects.filter(user=request.user.id, date__year=year, date__month=month)
+		transaction_list = models.Transaction.objects.filter(user=request.user.id, date__year=year, date__month=month).order_by('-date')
+
 		if day is not None:
 			transaction_list = transaction_list.filter(date__day=day)
 		if limit is not None:
 			transaction_list = transaction_list[:limit]
 
+
+
 		serializer = serializers.TransactionListSerializer(transaction_list, many=True)
 		
 		return Response(serializer.data)
+
+	def post(self, request):
+		serializer = self.serializer_class(data=request.DATA)
+		if serializer.is_valid():
+			serializer.save()
+			return Response(serializer.data, status=status.HTTP_201_CREATED)
+		else:
+			return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 """
@@ -188,7 +272,7 @@ class TransactionAction(LoggedInRESTAPIView, GenericAPIView):
 			return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 	def delete(self, request, pk):
-		Transaction = self.get_object(pk)
+		transaction = self.get_object(pk)
 		transaction.delete()
 		return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -251,22 +335,35 @@ def UserOption(request):
 ##############################################################3
 
 class Category(LoggedInRESTAPIView, GenericAPIView):
+	"""
+	Category list request.
+	Accept GET and POST method.
+	"""
 	serializer_class = serializers.CategorySerializer
 	def get(self, request):
-		cat = models.Category.objects.all()
+		cat = models.Category.objects.filter(user_id=0) | models.Category.objects.filter(user_id=request.user.id)
 		serializer = self.serializer_class(cat, many=True)
 		
 		return Response(serializer.data)
 
 	def post(self, request):
-		if request.DATA['user_id'] != request.user.id:
-			return Response({"errors":"You only add category for yourself!"}, status=400)
+		#if (request.DATA['user_id'] != 0 and request.DATA['user_id'] != request.user.id):
+		#	return Response({"errors":"You only add category for yourself."}, status=400)
+
+		check = models.Category.objects.filter(
+			user_id=request.user.id, 
+			text=request.DATA['text'], 
+			transaction_type=request.DATA.get('transaction_type','')
+		)
+		
+		if check:
+			return Response({"errors":"Duplicate category."}, status=400)
 
 		serializer = self.serializer_class(data=request.DATA)
 		if serializer.is_valid():
 			serializer.save() 
-
 			return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 		else:
 			return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -303,51 +400,6 @@ class CategoryAction(LoggedInRESTAPIView, GenericAPIView):
 		cat.delete()
 		return Response(status=status.HTTP_204_NO_CONTENT)
 
-
-
-
-
-
-"""
-Notes for user
-"""
-@api_view(['GET'])
-def NoteList(request):
-	notes = models.Note.objects.filter(user=request.user.id)
-	serializer = serializers.NoteSerializer(notes, many=True)
-	return Response(serializer.data)
-
-@api_view(['GET', 'POST', 'PUT', 'DELETE'])
-def NoteAction(request, pk):
-	try:
-		note = models.Note.object.get(user=request.user.id, pk=pk)
-	except:
-		return Response(status=404)
-
-	if request.method == 'GET':
-		serializer = serializers.NoteSerializer(note)
-		return Response(serializer.data)
-
-	if request.method == 'POST':
-		serializer = serializers.NoteSerializer(data=request.DATA)
-		if serializer.is_valid():
-			serializer.save()
-
-			return Response(serializer.data, status=status.HTTP_201_CREATED)
-		else:
-			return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-	if request.method == 'PUT':
-		serializer = serializers.NoteSerializer(note, data=request.DATA)
-		if serializer.is_valid():
-			serializer.save()
-			return Response(serializer.data)
-		else:
-			return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-	if request.method == 'DELETE':
-		note.delete()
-		return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 @api_view(['GET'])
@@ -494,3 +546,86 @@ def AutoCompleteCategory(request):
 
 	serializer = serializers.AutoCompleteSerializer(data)
 	return Response(serializer.data)
+
+
+##############################################################3
+########################### FEEDBACK #########################3
+##############################################################3
+
+class Feedback(LoggedOutRESTAPIView, GenericAPIView):
+	"""
+		Send feedback for us to make your idea become true.
+	"""
+	serializer_class = serializers.FeedbackSerializer
+
+	def post(self, request):
+		if request.DATA['user_id'] != 0 and request.DATA['user_id'] != request.user.id:
+			return Response(status=400)
+
+		serializer = self.serializer_class(data=request.DATA)
+		if serializer.is_valid():
+			serializer.save()
+			return Response({'message': 'Thank for your response.'}, status=status.HTTP_201_CREATED)
+		else:
+			return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+##############################################################3
+########################### NOTE #############################3
+##############################################################3
+
+class Note(LoggedInRESTAPIView, GenericAPIView):
+	"""
+	Note list request.
+	Accept GET and POST method.
+	"""
+	serializer_class = serializers.NoteSerializer
+	def get(self, request):
+		note = models.Note.objects.filter(username=request.user.id)
+		serializer = self.serializer_class(note, many=True)
+		
+		return Response(serializer.data)
+
+	def post(self, request):
+
+		serializer = self.serializer_class(data=request.DATA)
+		if serializer.is_valid():
+			serializer.save() 
+			return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+		else:
+			return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class NoteAction(LoggedInRESTAPIView, GenericAPIView):
+	"""
+	Get, change or delete note provide by <id>
+	"""
+
+	serializer_class = serializers.NoteSerializer
+
+	def get_object(self, pk, uid):
+		try:
+			return models.Note.objects.get(pk=pk, user=uid)
+		except models.Note.DoesNotExist:
+			raise Http404
+
+	def get(self, request, pk):
+		note = self.get_object(pk, request.user.id)
+		serializer = self.serializer_class(note)
+		return Response(serializer.data, status=status.HTTP_200_OK)
+
+	def put(self, request, pk):
+		note = self.get_object(pk)
+		serializer = self.serializer_class(note, data=request.DATA)
+		if serializer.is_valid():
+			serializer.save()
+			return Response(serializer.data)
+		else:
+			return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+	def delete(self, request, pk):
+		note = self.get_object(pk)
+		note.delete()
+		return Response(status=status.HTTP_204_NO_CONTENT)

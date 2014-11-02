@@ -18,13 +18,48 @@
 		<![endif]-->
 		
 		<script src="{% static 'jquery/jquery-1.9.1.min.js' %}" type="text/javascript"></script>
+		
+		{# <script src="{% static 'db/jquery-ui-1.10.3.custom.min.js' %}" type="text/javascript"></script> #}
+		
 		<script src="{% static 'angular/angular.min.js' %}" type="text/javascript"></script>
 		<script src="{% static 'angular/angular-resource.min.js' %}" type="text/javascript"></script>
 		<script src="{% static 'angular/angular-cookies.min.js' %}" type="text/javascript"></script>
 		<script src="{% static 'bootstrap/js/bootstrap.min.js' %}" type="text/javascript"></script>
+		<script src="{% static 'db/iconpicker/js/bootstrap-iconpicker.js' %}" type="text/javascript"></script>
+		<script src="{% static 'db/jquery.sparkline.min.js' %}" type="text/javascript"></script>
+		<script src="{% static 'db/bootstrap-switch.min.js' %}" type="text/javascript"></script>
+		<script src="{% static 'db/angular-toggle-switch.min.js' %}" type="text/javascript"></script>
+		<script src="{% static 'db/underscore-min.js' %}"></script>
+
+
+		<script src="{% static 'db/clndr/clndr.js' %}" type="text/javascript"></script>
+		<script src="{% static 'db/clndr/moment-2.2.1.js' %}" type="text/javascript"></script>
+		<script src="{% static 'db/clndr/evnt.calendar.init.js' %}" type="text/javascript"></script>
+		
+		<script src="{% static 'db/angular-table.min.js' %}"></script>
+		
 		<script src="{% static 'db/script.js' %}" type="text/javascript"></script>
+		
+		<script>
+			$(window).load(function(){
+				'use strict';
+
+				$("#loading").fadeOut("1000", function() {
+				// Animation complete
+					$('#loading img').css("display","none");
+					$('#loading').css("display","none");
+					$('#loading').css("background","none");
+					$('#loading').css("width","0");
+					$('#loading').css("height","0");
+				});
+			});
+		</script>
+
 	</head>
 	<body ng-controller='xmoney-account-controller'>
+	<div id="loading" style="display:none"><img src="{% static 'db/loader.gif' %}" alt="Just Wait..."></div>
+		{% include 'base/messagealert.html' %}
+		{% include 'base/noscript.html' %}
 		<div class="container">
 			<section id="team" class="white-bg padding-top-bottom">
 				<div class="container">
@@ -63,7 +98,9 @@
 								</table>
 								<hr>
 								<h3>Security</h3>
-								<a href="#changepass" data-toggle="modal" data-target=".bs-change-password-modal-lg">Change password</a> &middot; <a href="#forgotpassword">Forgot password?</a>
+								<a href="#changepass" data-toggle="modal" data-target=".bs-change-password-modal-lg">Change password</a> 
+								&middot; <a href="#forgotpassword">Forgot password?</a>
+								&middot; <a href="/accounts/logout">Sign me out</a>
 							</div>
 						</div>
 					</div>
@@ -77,6 +114,7 @@
 		{% include 'accounts/modals/changepassword.html' %}
 		{% include 'accounts/modals/changemail.html' %}
 		{% include 'accounts/modals/changelanguage.html' %}
+		
 
 	</body>
 </html>

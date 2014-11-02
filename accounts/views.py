@@ -14,6 +14,11 @@ def AuthBase(request):
 
 ####### LOGIN #######
 def Login(request):
+	redirect_to = request.GET.get('next', '/dashboard')
+
+	if request.user.is_authenticated():
+		return redirect(redirect_to)
+
 	state  = ''
 	username = password = ''
 
@@ -45,7 +50,10 @@ def Logout(request):
 
 ####### REGISTER #######
 def Register(request):
-	redirect_to = request.GET.get('next', '/accounts/login')
+	redirect_to = request.GET.get('next', '/dashboard')
+
+	if request.user.is_authenticated():
+		return redirect(redirect_to)
 
 	if request.POST:
 		user_form = forms.UserForm(data=request.POST)

@@ -1,0 +1,51 @@
+<div class="modal fade bs-choose-category-modal-lg  " style="-webkit-animation: bounce 5s all; animation: bounce 5s all;" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Choose category</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-4">
+            Please choose category:
+          </div>
+          <div class="col-md-4">
+            
+            <toggle-switch
+            model="dashboard.transtype_switch"
+            class="switch-success switch-large"
+            on-label="Income"
+            off-label="Expense">
+            <toggle-switch>
+          </div>
+          <div class="col-md-4">
+            <a href="#add-new-category" ng-click="openModalNewCategory()"> <i class="fa fa-plus"></i> new </a>
+          </div>
+        </div>
+        <hr />
+        
+        <div class="row" ng-show="dashboard.transtype_switch">
+          <div
+            class="col-md-4 choose-category-item"
+            ng-repeat="item in dashboard.category_group.in"
+            ng-click="chooseCategory(item)">
+            <i class="fa ## item.icon ? item.icon : 'fa-question' ##"></i>
+            <span ng-bind="item.text" title="## item.description ##">Category</span>
+          </div>
+          
+        </div>
+        <div class="row" ng-show="!dashboard.transtype_switch">
+          <div
+            class="col-md-4 choose-category-item"
+            ng-repeat="item in dashboard.category_group.ex"
+            ng-click="chooseCategory(item)">
+            <i class="glyphicon ## item.icon ##"></i>
+            <span ng-bind="item.text" title="## item.description ##">Category</span>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

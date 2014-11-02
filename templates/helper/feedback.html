@@ -1,0 +1,44 @@
+{% extends "helper/base.html" %}
+
+{% block page_title %}Feedback{% endblock %}
+{% block header_brand %}Feedback{% endblock %}
+
+{% block content %}
+<div class="row" ng-controller="xmoney-helper-feedback-controller">
+	<div class="col-sm-3"></div>
+	<div class="col-sm-6">
+		<div class=" ">
+			<div class="panel-body">
+				<div class="alert alert-warning alert-dismissible" ng-show="message.errors" role="alert">
+					<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<span ng-repeat="(key, itemerr) in message.errors"><strong># ## key ##</strong>: <span ng-repeat="mess in itemerr">## mess ## </span> <br></span>
+				</div>
+				<div class="alert alert-success alert-dismissible" ng-show="message.messages" role="alert">
+					<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					## message.messages ##
+				</div>
+				
+				<form ng-submit="sendFeedback()" role="form">
+					<div class="form-group">
+						<label for="emailaddr">Email address</label>
+						<input type="email" class="form-control" id="emailaddr" ng-model="feedback_data.email" placeholder="Enter email">
+					</div>
+					<div class="form-group">
+						<label for="yournam">Your name</label>
+						<input type="text" class="form-control" id="yournam" ng-model="feedback_data.name" placeholder="Enter your name">
+					</div>
+					<div class="form-group">
+						<label for="yourcont">Message for us</label>
+						<textarea class="form-control" ng-model="feedback_data.content" rows="5" id="yourcont"></textarea>
+					</div>
+
+					<div class="form-group">
+						<button type="submit" class="btn btn-info">Submit</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-3"></div>
+</div>
+{% endblock %}

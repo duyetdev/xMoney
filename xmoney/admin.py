@@ -29,3 +29,4 @@ admin.site.register(Transaction, list_display = ('transaction_id', 'user', 'cate
 admin.site.register(Category)
 admin.site.register(Wallet)
 admin.site.register(Event)
+admin.site.register(Feedback)
