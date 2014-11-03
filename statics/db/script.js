@@ -550,6 +550,10 @@ xmoneyApplication.controller('xmoney-helper-controller', ['$scope', '$http', fun
 /* FEEDBACK CONTROLLER
 ============================================================= */
 xmoneyApplication.controller('xmoney-helper-feedback-controller', ['$scope', '$http', function(scope, http){
+	scope.message = {
+		messages: '',
+		errors: '',
+	}
 	var resetFeedback = function() {
 		scope.feedback_data = {
 			user_id: 0,
@@ -568,13 +572,14 @@ xmoneyApplication.controller('xmoney-helper-feedback-controller', ['$scope', '$h
 	 })
 
 	scope.sendFeedback = function() {
-		http.post(api+'/feedback/', scope.feedback_data).success(function(message){
+		http.post(api+'/feedback/', scope.feedback_data).success(function(res){
 			// Set message
-			scope.message.messages = message.message;
+			scope.message.messages = res.message;
 			scope.message.errors = '';
 
 			// Clean all 
 			resetFeedback();
+			$('#feedback-form').slideUp();
 		}).error(function(e) {
 			scope.message.errors = e;
 			scope.message.message = '';
