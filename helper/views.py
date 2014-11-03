@@ -27,6 +27,8 @@ def DMCA(request):
 def Bank(request):
 	return render(request, 'helper/bank.html', )
 
+def ChangeLog(request):
+	return render(request, 'helper/bank.html', )	
 
 '''
 class ResultsView(generic.DetailView):
