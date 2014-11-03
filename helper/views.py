@@ -30,6 +30,9 @@ def Bank(request):
 def Changelogs(request):
 	return render(request, 'helper/changelogs.html', )	
 
+def Invite(request):
+	return render(request, 'helper/invite.html')
+
 '''
 class ResultsView(generic.DetailView):
 	context_object_name = 'poll'

@@ -10,4 +10,5 @@ urlpatterns = patterns('',
 	url(r'^contact/$', helper_views.Contact),
 	url(r'^dmca/$', helper_views.DMCA),	
 	url(r'^changelogs/$', helper_views.Changelogs),	
+	url(r'^invite/$', helper_views.Invite),	
 )
