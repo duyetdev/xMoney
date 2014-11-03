@@ -1,0 +1,47 @@
+{% extends "helper/base.html" %}
+
+{% block page_title %}Changelogs{% endblock %}
+{% block header_brand %}Changelogs{% endblock %}
+
+{% block content %}
+<div class="row" ng-controller="xmoney-helper-feedback-controller">
+	<div class="col-sm-12">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<h1></h1>
+				<p>
+					<!-- ---------------------- -->				
+					<h3>03/11/2014</h3>
+					<ul>
+						<li>Add chart D3.js</li>
+					</ul>
+
+
+					
+					<h3>01/11/2014</h3>
+					<ul>
+						<li>Fix Add Transactions</li>
+						<li>Fix Add Category</li>
+						<li>Fix right-table view transaction.</li>
+						<li>Feedback submit</li>
+					</ul>
+
+					<h3>25/10/2014</h3>
+					<ul>
+						<li>Footer link.</li>
+						<li>Support/Helper page.</li>
+					</ul>
+
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-sm-12">
+		<p>Sent me a <a href="{{SITE_URL}}../feedback">feedback</a> or mail to <strong>lvduit08@gmail.com</strong></p>
+	</div>
+</div>
+{% endblock %}
+
+{% block script_footer %}{% endblock %}	
+
