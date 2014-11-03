@@ -580,7 +580,7 @@ xmoneyApplication.controller('xmoney-helper-feedback-controller', ['$scope', '$h
 			// Clean all 
 			resetFeedback();
 			$('#feedback-form').slideUp();
-			//$('.contact-block').animate({'float':'none', paddingTop: '28px', paddingLeft: 'auto', paddingRight: 'auto'}, 1000);
+			$('.maps-block').slideDown();
 		}).error(function(e) {	
 			scope.message.errors = e;
 			scope.message.message = '';
