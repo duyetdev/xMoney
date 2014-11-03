@@ -60,8 +60,6 @@
 			footer {
 				text-align: center;
 			}
-
-
 		</style>
 
 		{% include 'dashboard/style.html' %}
@@ -150,10 +148,10 @@
 				
 					
 				
-				<a href="/accounts/login?next=/dashboard" class="btn btn-lg btn-info">
+				<a href="{{SITE_URL}}/accounts/login?next=/dashboard" class="btn btn-lg btn-info">
 					Sign in
 				</a> 
-				<a href="/accounts/register" class="btn btn-lg">Sign up</a> 	
+				<a href="{{SITE_URL}}/accounts/register" class="btn btn-lg">Sign up</a> 	
 			
 			
 				</div>
@@ -183,12 +181,12 @@
 					<div class="col-md-12">
 						(c) 2015 xmoney v1.1.3 by alpha team 
 
-						&middot; <a href="./" title="ISC Club">Home</a>	
-						&middot; <a href="./helper/help" title="ISC Club">Help center</a>	
-						&middot; <a href="./helper/privacy" title="ISC Club">Privacy & Terms</a>	
-						&middot; <a href="./helper/dmca" title="ISC Club">Copyright</a>
-						&middot; <a href="./helper/contact" title="ISC Club">Contact us</a>
-						&middot; <a href="./helper/feedback" title="ISC Club">Feedback</a>
+						&middot; <a href="{{SITE_URL}}/" title="ISC Club">Home</a>	
+						&middot; <a href="{{SITE_URL}}/helper/help" title="ISC Club">Help center</a>	
+						&middot; <a href="{{SITE_URL}}/helper/privacy" title="ISC Club">Privacy & Terms</a>	
+						&middot; <a href="{{SITE_URL}}/helper/dmca" title="ISC Club">Copyright</a>
+						&middot; <a href="{{SITE_URL}}/helper/contact" title="ISC Club">Contact us</a>
+						&middot; <a href="{{SITE_URL}}/helper/feedback" title="ISC Club">Feedback</a>
 						&middot; <a href="#" title="ISC Club">About ISC Club</a>	
 						
 					</div>

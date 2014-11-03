@@ -66,17 +66,17 @@
 				<nav role="navigation">
 					<div class="navbar-header">
 						<div class="col-lg-5 col-sx-5">
-							<a class="navbar-brand" href="/">Dashboard</a>
+							<a class="navbar-brand" href="{{SITE_URL}}">Dashboard</a>
 						</div>
 						<div class="col-lg-3 col-sx-1"></div>
 						<div class="col-lg-2 col-sx-1"></div>
 						<div class="col-lg-2 col-sx-5 text-right">
 							<a href="#" class="user-menu" title="Accounts" data-toggle="dropdown">#{{user.username}} <b class="caret"></b></a>
 							<ul class="dropdown-menu">
-								<li><a href="/accounts">Account options</a></li>
-								<li><a href="/accounts/logout">Logout</a></li>
+								<li><a href="{{SITE_URL}}/accounts">Account options</a></li>
+								<li><a href="{{SITE_URL}}/accounts/logout">Logout</a></li>
 								<li class="divider"></li>
-								<li><a href="/helper/help">Helps</a></li>
+								<li><a href="{{SITE_URL}}/helper/help">Helps</a></li>
 							</ul>
 						</div>
 					</div>
