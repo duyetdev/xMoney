@@ -13,6 +13,10 @@ Author: lvduit (lvduit08@gmail.com)
 Technology: Python, Django, AngularJs, Rest
 
 
-// ------ Django packet
+// ------ Django packet --------
 pip install djangorestframework
 pip install django-htmlmin
+
+// -------- MORE INFO ----------
+Data: MySQL, SQLite
+
