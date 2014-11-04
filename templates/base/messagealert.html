@@ -21,11 +21,13 @@
 		background: #227115;
 		color: #FFFFFF;
 	}
+	.alert-message.loading {
+		border: 1px solid #1FB5AC;
+		background: #1FB5AC;
+		color: #FFFFFF;
+	}
 </style>
 
-<span ng-show="message.is_error" ng-click="message.is_error = 0" class="alert-message error">
-	## message.error ##
-</span>
-<span ng-show="message.is_success" ng-click="message.is_success = 0" class="alert-message success">
-	## message.success ##
-</span>
+<span ng-show="message.is_error" ng-click="message.is_error = 0" class="alert-message error" ng-bind="message.error"></span>
+<span ng-show="message.is_success" ng-click="message.is_success = 0" class="alert-message success" ng-bind="message.success"></span>
+<span ng-show="message.is_loading" ng-click="message.is_loading = 0" class="alert-message loading">Loading...</span>
