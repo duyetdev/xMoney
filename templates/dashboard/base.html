@@ -56,7 +56,7 @@
 			});
 		</script>
 	</head>
-	<body ng-controller='xmoney-dashboard-controller'>
+	<body ng-controller='xmoney-dashboard-controller' ng-show="1">
 		<div id="loading" style="display:none"><img src="{% static 'db/loader.gif' %}" alt="Just Wait..."></div>
 		{% include 'base/noscript.html' %}
 		{% include 'base/messagealert.html' %}
@@ -84,14 +84,19 @@
 			</div>
 		</div>
 		<div class="container main-dashboard">
-			<!-- Top statictis -->
-			{% include 'dashboard/header.stat.overview.html' %}
-			
+			<div class="row">
+				<!-- Top statictis -->
+				{% include 'dashboard/header.stat.overview.html' %}
+			</div>
+
 			<!-- Second block -->
 			<div class="row">
 				{% include 'dashboard/middle.left.note.html' %}
 				{% include 'dashboard/middle.left.calendar.html' %}
 				{% include 'dashboard/middle.right.todaytable.html' %}
+			</div>
+			<div class="row">
+				
 				{% include 'dashboard/bottom.center.chart.html' %}			
 			</div>
 
