@@ -2,6 +2,18 @@ var xmoneyApplication = angular.module('xmoney-app', ['ngResource','toggle-switc
 var api = '/api/v1';
 var is_debug = true; if (!is_debug) { console.log = function() {} }
 
+Date.prototype.firstDayOfMonth = function(month) {
+	var d = this;
+	if (month) d.setMonth(month);
+	d.setDate(1);
+	return d;
+}
+Date.prototype.lastNDays = function(n) {
+	var d = this;
+	d.setDate(new Date().getDate()-n);
+	return d;
+}
+
 xmoneyApplication.config(function($interpolateProvider, $httpProvider) {
 	$interpolateProvider.startSymbol('##');
 	$interpolateProvider.endSymbol('##');
@@ -108,6 +120,11 @@ xmoneyApplication.controller('xmoney-dashboard-controller', ['$scope', '$http', 
 
 	// mode display top stats
 	scope.dashboard.stat_overview_mode = 'last30day';
+	scope.dashboard.stat_overview_time = {
+		start: (new Date()).lastNDays(30),
+		end: (new Date()),
+	}
+
 
 	// List category
 	scope.dashboard.category = [];
@@ -119,11 +136,9 @@ xmoneyApplication.controller('xmoney-dashboard-controller', ['$scope', '$http', 
 		
 		scope.message = {}
 		if (type == 'error') {
-			scope.message.is_error = true;
-			scope.message.error = message;
+			scope.message.is_error = true; scope.message.error = message;
 		} else if (type == 'success') {
-			scope.message.is_success = true;
-			scope.message.success = message;
+			scope.message.is_success = true; scope.message.success = message;
 		}
 
 		$('.alert-message').fadeOut(3000);
@@ -312,10 +327,11 @@ xmoneyApplication.controller('xmoney-dashboard-controller', ['$scope', '$http', 
 		});
 	}
 
-
-	scope.loadTransactionFromDate(new Date().getDate(), new Date().getMonth()+1, new Date().getFullYear());
-
-	//scope.loadTodayTransaction(10);
+	var loadTodayTransaction = function() {
+		console.log('Log today transaction...');
+		scope.loadTransactionFromDate(new Date().getDate(), new Date().getMonth()+1, new Date().getFullYear());
+	}
+	loadTodayTransaction();
 
 	// Load list category -----------------
 
@@ -338,7 +354,13 @@ xmoneyApplication.controller('xmoney-dashboard-controller', ['$scope', '$http', 
 
 
 	scope.loadStatOverview = function(mode) {
+		// Set new date mode
 		scope.dashboard.stat_overview_mode = mode;
+		
+		// Reset start and end date mode
+		if (mode === 'last30day') scope.dashboard.stat_overview_time.start = (new Date()).lastNDays(30);
+		else if (mode === 'last7day') scope.dashboard.stat_overview_time.start = (new Date()).lastNDays(7);
+		
 		http.get(api+'/stats/overview?mode='+scope.dashboard.stat_overview_mode).success(function(d){
 			$(function(){
 				console.log(d);
@@ -374,12 +396,15 @@ xmoneyApplication.controller('xmoney-dashboard-controller', ['$scope', '$http', 
 	}
 
 	// ------------ ADD NEW TRANSACTION -------------
-	scope.openModalNewTransaction = function() {
-		// User info
-		scope.dashboard.new_transaction.user = scope.user.id;
+	var repairNewDataTransaction = function() {
+		scope.dashboard.new_transaction = {
+			user: scope.user.id || 0,
+			category: {'id': 0, 'text':'Select category', 'icon':'fa-plus'},
 
-		// Category
-		scope.dashboard.new_transaction.category = {'id': 0, 'text':'Select category', 'icon':'fa-plus'}
+		}
+	}
+	scope.openModalNewTransaction = function() {
+		repairNewDataTransaction();
 
 		$('.bs-add-transaction-modal-lg').modal('show');
 	}
@@ -406,8 +431,9 @@ xmoneyApplication.controller('xmoney-dashboard-controller', ['$scope', '$http', 
 			$('.bs-add-transaction-modal-lg').modal('hide');
 
 			// Reload all data
-			scope.loadStatOverview(scope.dashboard.stat_overview_mode)
-			scope.loadTodayTransaction(10)
+			scope.loadStatOverview(scope.dashboard.stat_overview_mode);
+			repairNewDataTransaction();
+			loadTodayTransaction();
 		}).error(function(e){
 			console.log('Have some error');
 			scope.dashboard.new_transaction_error = e;
@@ -497,21 +523,20 @@ xmoneyApplication.controller('xmoney-dashboard-controller', ['$scope', '$http', 
 		$('.bs-delete-confirm-modal-lg').modal('show');
 	}
 	scope.deleteTransaction = function() {
+		var deleted = null;
 		if (scope.dashboard.edit_transaction) {
 			http.delete(api+'/transaction/' +scope.dashboard.edit_transaction.transaction_id+'/').success(function(d){
 				console.log('Delete transaction', d);	
-				setMessage('success', 'Deleted success!');
+				setMessage('success', 'Delete success!');
+				loadTodayTransaction();
+				scope.dashboard.edit_transaction = false;
+				// Hide modal
+				$('.bs-delete-confirm-modal-lg').modal('hide');
+				scope.loadStatOverview(scope.dashboard.stat_overview_mode);
 			}).error(function(d){
 				setMessage('error', 'Delete transaction was fail!');
-			})
-
-			// Hide modal
-			$('.bs-delete-confirm-modal-lg').modal('hide');
-
-			// Reload all data
-			scope.dashboard.edit_transaction = false;
-			scope.loadStatOverview(scope.dashboard.stat_overview_mode)
-			scope.loadTodayTransaction(10)
+				$('.bs-delete-confirm-modal-lg').modal('hide');
+			});	
 		}
 
 		return false;
