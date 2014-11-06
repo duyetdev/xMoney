@@ -211,7 +211,7 @@ xmoneyApplication.controller('xmoney-dashboard-controller', ['$scope', '$http', 
 		                $(target.element).addClass('today');
 		                scope.dashboard.logtable_date = new Date(Date.parse(target.date));
 		                console.log("Picker this day: ", scope.dashboard.logtable_date);
-		                scope.loadTransactionFromDate(scope.dashboard.logtable_date.getDate(), scope.dashboard.logtable_date.getMonth()+1, scope.dashboard.logtable_date.getFullYear());
+		                tablelog.load.day(scope.dashboard.logtable_date.getDate(), scope.dashboard.logtable_date.getMonth()+1, scope.dashboard.logtable_date.getFullYear());
 		               // console.log("Show category of ", Date.parse(target.date), '/', Date.parse(target.date).getMonth());
 		                // if you turn the `constraints` option on, try this out:
 		                // if($(target.element).hasClass('inactive')) {
@@ -267,9 +267,9 @@ xmoneyApplication.controller('xmoney-dashboard-controller', ['$scope', '$http', 
 			scope.dashboard.logtable_type = type;
 			// Reload data table 
 			if (type == 'day') {
-				scope.loadTransactionFromDate(scope.dashboard.logtable_date.getDate(), scope.dashboard.logtable_date.getMonth()+1, scope.dashboard.logtable_date.getFullYear());
+				tablelog.load.day(scope.dashboard.logtable_date.getDate(), scope.dashboard.logtable_date.getMonth()+1, scope.dashboard.logtable_date.getFullYear());
 			} else {
-				scope.loadTransactionFromDate(0, scope.dashboard.logtable_date.getMonth()+1, scope.dashboard.logtable_date.getFullYear());
+				tablelog.load.month(scope.dashboard.logtable_date.getMonth()+1, scope.dashboard.logtable_date.getFullYear());
 			}
 		}
 		
@@ -342,11 +342,36 @@ xmoneyApplication.controller('xmoney-dashboard-controller', ['$scope', '$http', 
 		});
 	}
 
-	var loadTodayTransaction = function() {
-		console.log('Log today transaction...');
-		scope.loadTransactionFromDate(scope.date.getDate(), scope.date.getMonth()+1, scope.date.getFullYear());
+	var tablelog = {};
+	tablelog.load = {
+		today: function() {
+			console.log('Get today transaction...');
+			scope.loadTransactionFromDate(scope.date.getDate(), scope.date.getMonth()+1, scope.date.getFullYear());
+		},
+		day: function(d,m,y) {
+			var d = d || scope.date.getDate();
+			var m = m || scope.date.getMonth()+1;
+			var y = y || scope.date.getFullYear();
+			console.log('Get date transaction...');
+			scope.loadTransactionFromDate(d, m, y);
+		},
+		month: function(m,y) {
+			var m = m || scope.date.getMonth()+1;
+			var y = y || scope.date.getFullYear();
+			console.log('Get month transaction...');
+			scope.loadTransactionFromDate(0, m, y);
+		}
+	};
+	tablelog.reload = function() {
+		scope.dashboard.logtable_date = scope.dashboard.logtable_date || new Date();
+		if (scope.dashboard.logtable_type == 'day') {
+			tablelog.load.day(scope.dashboard.logtable_date.getDate(), scope.dashboard.logtable_date.getMonth()+1, scope.dashboard.logtable_date.getFullYear());
+		} else {
+			tablelog.load.month(scope.dashboard.logtable_date.getMonth()+1, scope.dashboard.logtable_date.getFullYear());
+		}
 	}
-	loadTodayTransaction();
+	tablelog.load.today();
+	
 
 	// Load list category -----------------
 
@@ -448,7 +473,7 @@ xmoneyApplication.controller('xmoney-dashboard-controller', ['$scope', '$http', 
 			// Reload all data
 			scope.loadStatOverview(scope.dashboard.stat_overview_mode);
 			repairNewDataTransaction();
-			loadTodayTransaction();
+			tablelog.reload();
 		}).error(function(e){
 			console.log('Have some error');
 			scope.dashboard.new_transaction_error = e;
