@@ -216,7 +216,7 @@ class TransactionOverview(LoggedInRESTAPIView, GenericAPIView):
 
 	def get(self, request):
 		today = date.today()
-		day 	= request.QUERY_PARAMS.get('day', today.day)
+		day 	= request.QUERY_PARAMS.get('day', 0)
 		month 	= request.QUERY_PARAMS.get('month', today.month)
 		year 	= request.QUERY_PARAMS.get('year', today.year)
 		limit 	= request.QUERY_PARAMS.get('limit', None)
@@ -226,7 +226,7 @@ class TransactionOverview(LoggedInRESTAPIView, GenericAPIView):
 
 		transaction_list = models.Transaction.objects.filter(user=request.user.id, date__year=year, date__month=month).order_by('-date')
 
-		if day is not None:
+		if day != 0:
 			transaction_list = transaction_list.filter(date__day=day)
 		if limit is not None:
 			transaction_list = transaction_list[:limit]
