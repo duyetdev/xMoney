@@ -74,7 +74,7 @@
 							<a href="#" class="user-menu" title="Accounts" data-toggle="dropdown">#{{user.username}} <b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li><a href="{{SITE_URL}}/accounts">Account options</a></li>
-								<li><a href="{{SITE_URL}}/accounts/logout">Logout</a></li>
+								<li><a href="javascript:;" data-toggle="modal" data-target=".bs-logout-modal-lg">Logout</a></li>
 								<li class="divider"></li>
 								<li><a href="{{SITE_URL}}/helper/help">Helps</a></li>
 							</ul>
@@ -106,11 +106,14 @@
 		</div>
 
 	{% include 'base/footer.html' %}
+
 	{% include 'dashboard/modals/addtransaction.html' %}
 	{% include 'dashboard/modals/edittransaction.html' %}
 	{% include 'dashboard/modals/addcategory.html' %}
 	{% include 'dashboard/modals/welcome-message.html' %}
 	{% include 'dashboard/modals/choosecategory.html' %}
+	{% include 'dashboard/modals/logout.html' %}
+
 
 	{% include 'dashboard/modals/managecategory.html' %}
 	{% include 'dashboard/modals/importexport.html' %}

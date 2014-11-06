@@ -112,6 +112,8 @@ xmoneyApplication.controller('xmoney-dashboard-controller', ['$scope', '$http', 
 	// Dashboard object init 
 	scope.dashboard = {}
 
+	scope.date = new Date();
+
 	// New category object 
 	scope.dashboard.new_category = {}
 
@@ -121,8 +123,8 @@ xmoneyApplication.controller('xmoney-dashboard-controller', ['$scope', '$http', 
 	// mode display top stats
 	scope.dashboard.stat_overview_mode = 'last30day';
 	scope.dashboard.stat_overview_time = {
-		start: (new Date()).lastNDays(30),
-		end: (new Date()),
+		start: (scope.date).lastNDays(30),
+		end: (scope.date),
 	}
 
 
