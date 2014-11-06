@@ -1,4 +1,13 @@
 <div class="col-lg-5 col-md-5 col-xs-12">
+<style>
+	.strong {font-weight:700;}
+	.logtable-choose span{ cursor:pointer; }
+</style>
+	<!-- Transaction list mode -->
+	<span class="logtable-choose">Show data: <span ng-class="{strong:dashboard.logtable_type=='day'}" ng-click="changeLogTableType('day')"><a href="javascript:;">Day</a> (## dashboard.logtable_date | date:'mediumDate' ##)</span> | <span ng-class="{strong:dashboard.logtable_type=='month'}" ng-click="changeLogTableType('month')"><a href="javascript:;">Month</a> (## dashboard.logtable_date | date:'MMM, yyyy' ##)</span></span>
+	
+	<!-- / Transaction list mode -->
+
 	<div class="today-transaction" ng-init="dashboard.transaction_today = []">
 		<table class="table today-table" at-table at-paginated at-list="dashboard.transaction_today" at-config="dashboard.todayTableConfig">
 			
@@ -12,11 +21,6 @@
 				</tr>
 			</thead>
 			<tbody>
-
-			
-
-
-				
 				<tr>
 					<td at-attribute="#">##$index+1##</td>
 					<td at-sortable at-attribute="amount">
@@ -37,8 +41,6 @@
 				</tr>
 			</tbody>
 		</table>
-
-		<at-pagination at-list="dashboard.transaction_today" at-config="dashboard.todayTableConfig" class="table-pagination"></at-pagination>
-
-	</div>
+	<at-pagination at-list="dashboard.transaction_today" at-config="dashboard.todayTableConfig" class="table-pagination"></at-pagination>
+</div>
 </div>

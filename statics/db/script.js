@@ -123,8 +123,8 @@ xmoneyApplication.controller('xmoney-dashboard-controller', ['$scope', '$http', 
 	// mode display top stats
 	scope.dashboard.stat_overview_mode = 'last30day';
 	scope.dashboard.stat_overview_time = {
-		start: (scope.date).lastNDays(30),
-		end: (scope.date),
+		start: (new Date()).lastNDays(30),
+		end: (new Date()),
 	}
 
 
@@ -176,7 +176,8 @@ xmoneyApplication.controller('xmoney-dashboard-controller', ['$scope', '$http', 
 	    // Calendar middle page 
 		// call this from the developer console and you can control both instances
 		var calendars = {};
-
+		scope.dashboard.logtable_date = new Date(); //scope.date; // day picker from center calender 
+		scope.dashboard.logtable_type = 'day'; // day, month
 		$(document).ready( function() {
 
 		    // assuming you've got the appropriate language files,
@@ -208,9 +209,9 @@ xmoneyApplication.controller('xmoney-dashboard-controller', ['$scope', '$http', 
 		                console.log(target);
 		                $('.cal1 .today').removeClass('today');
 		                $(target.element).addClass('today');
-		                var picker_day = new Date(Date.parse(target.date));
-		                console.log("Picker this day: ", picker_day);
-		                scope.loadTransactionFromDate(picker_day.getDate(), picker_day.getMonth()+1, picker_day.getFullYear());
+		                scope.dashboard.logtable_date = new Date(Date.parse(target.date));
+		                console.log("Picker this day: ", scope.dashboard.logtable_date);
+		                scope.loadTransactionFromDate(scope.dashboard.logtable_date.getDate(), scope.dashboard.logtable_date.getMonth()+1, scope.dashboard.logtable_date.getFullYear());
 		               // console.log("Show category of ", Date.parse(target.date), '/', Date.parse(target.date).getMonth());
 		                // if you turn the `constraints` option on, try this out:
 		                // if($(target.element).hasClass('inactive')) {
@@ -236,7 +237,8 @@ xmoneyApplication.controller('xmoney-dashboard-controller', ['$scope', '$http', 
 		            },
 		            onYearChange: function() {
 		                console.log('year changed.');
-		            }
+		            }, 
+		    
 		        },
 		        multiDayEvents: {
 		            startDate: 'startDate',
@@ -248,20 +250,28 @@ xmoneyApplication.controller('xmoney-dashboard-controller', ['$scope', '$http', 
 
 
 		    // bind both clndrs to the left and right arrow keys
-		    $(document).keydown( function(e) {
+		  /*  $(document).keydown( function(e) {
 		        if(e.keyCode == 37) {
 		            // left arrow
-		            calendars.clndr1.back();
+		            calendars.clndr1.next();
 		        }
 		        if(e.keyCode == 39) {
 		            // right arrow
-		            calendars.clndr1.forward();
+		            calendars.clndr1.previous();
 		        }
 		    });
-
+		*/		    
 		});
 
-
+		scope.changeLogTableType = function(type) {
+			scope.dashboard.logtable_type = type;
+			// Reload data table 
+			if (type == 'day') {
+				scope.loadTransactionFromDate(scope.dashboard.logtable_date.getDate(), scope.dashboard.logtable_date.getMonth()+1, scope.dashboard.logtable_date.getFullYear());
+			} else {
+				scope.loadTransactionFromDate(0, scope.dashboard.logtable_date.getMonth()+1, scope.dashboard.logtable_date.getFullYear());
+			}
+		}
 		
 		/*
 		$('[name="transtype"]').bootstrapSwitch({
@@ -307,31 +317,34 @@ xmoneyApplication.controller('xmoney-dashboard-controller', ['$scope', '$http', 
 	scope.loadTransactionFromDate = function(day, month, year) {		
 		var d = new Date();
 
-		day = day || d.getDate();
+		day = day || 0;
 		month = month || d.getMonth()+1;
 		year = year || d.getFullYear();
 
 		console.log("LOOOOOO", day);
 
 		var reqUrl = api+'/transaction/?';
-		reqUrl += 'day='+day+'&month='+month+'&year='+year;
+		if (day !== 0)
+			reqUrl += 'day='+day +'&';
+
+		reqUrl += 'month='+month+'&year='+year;
 		reqUrl += '&killedcache=' + new Date().getTime();
 
 		http.get(reqUrl).success(function(d) {
 			if (d) {
 				for (var i = 0; i < d.length; ++i) {
-					console.log("loadTodayTransaction -> ", d[i]);
+					console.log("Load Table Log Data -> ", d[i]);
 					d[i].category = getCategoryFromId(d[i].category);
 				}
 			}
-			console.log('Load today transaction (table): ', d);
+			console.log('Load table log data: ', d);
 			scope.dashboard.transaction_today = d;
 		});
 	}
 
 	var loadTodayTransaction = function() {
 		console.log('Log today transaction...');
-		scope.loadTransactionFromDate(new Date().getDate(), new Date().getMonth()+1, new Date().getFullYear());
+		scope.loadTransactionFromDate(scope.date.getDate(), scope.date.getMonth()+1, scope.date.getFullYear());
 	}
 	loadTodayTransaction();
 
