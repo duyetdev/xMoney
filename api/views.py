@@ -627,6 +627,6 @@ class NoteAction(LoggedInRESTAPIView, GenericAPIView):
 			return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 	def delete(self, request, pk):
-		note = self.get_object(pk)
+		note = self.get_object(pk, request.user.id)
 		note.delete()
 		return Response(status=status.HTTP_204_NO_CONTENT)
