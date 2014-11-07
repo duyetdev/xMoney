@@ -211,8 +211,9 @@ xmoneyApplication.controller('xmoney-dashboard-controller', ['$scope', '$http', 
 		                $(target.element).addClass('today');
 		                scope.dashboard.logtable_date = new Date(Date.parse(target.date));
 		                console.log("Picker this day: ", scope.dashboard.logtable_date);
-		                tablelog.load.day(scope.dashboard.logtable_date.getDate(), scope.dashboard.logtable_date.getMonth()+1, scope.dashboard.logtable_date.getFullYear());
-		               // console.log("Show category of ", Date.parse(target.date), '/', Date.parse(target.date).getMonth());
+		                //tablelog.load.day(scope.dashboard.logtable_date.getDate(), scope.dashboard.logtable_date.getMonth()+1, scope.dashboard.logtable_date.getFullYear());
+		               	tablelog.reload();
+		               	// console.log("Show category of ", Date.parse(target.date), '/', Date.parse(target.date).getMonth());
 		                // if you turn the `constraints` option on, try this out:
 		                // if($(target.element).hasClass('inactive')) {
 		                //   console.log('not a valid datepicker date.');
@@ -469,7 +470,7 @@ xmoneyApplication.controller('xmoney-dashboard-controller', ['$scope', '$http', 
 			// Message about success
 			setMessage('success', 'Success!')
 
-			// Close modal
+			// Close modal add transaction
 			$('.bs-add-transaction-modal-lg').modal('hide');
 
 			// Reload all data
@@ -584,6 +585,11 @@ xmoneyApplication.controller('xmoney-dashboard-controller', ['$scope', '$http', 
 		return false;
 	}
 
+	// ----------------- EVENTS -------------------------------
+	scope.openModalChooseEvent = function() {
+		$('.bs-choose-event-modal-lg').modal('show');
+	}
+
 	// ----------------- IMPORT / EXPORT DATA -----------------
 	scope.openModalImportExport = function() {
 		$('.bs-import-export-modal-lg').modal('show');
@@ -596,6 +602,8 @@ xmoneyApplication.controller('xmoney-dashboard-controller', ['$scope', '$http', 
 	// Open modal
 	scope.openModalManageCategory = function() {
 		$('.bs-manage-category-modal-lg').modal('show');
+		$('.bs-add-transaction-modal-lg').modal('hide');
+		
 	}
 
 	// Open Modal detail
