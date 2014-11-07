@@ -3,16 +3,27 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="day">
-					<span>Todo list &middot; {% now "d/m/Y" %}</span>
+					<span>
+					Notes &middot; {% now "d/m/Y" %}
+					</span>
 					{% now "l" %}
 				</div>
-				<br>
-
-				<ul>
-					<li ng-repeat="item in dashboard.notes"></li>
-				</ul>
+				
+				<table class="table notes-list" at-table at-paginated at-list="dashboard.note.notes" at-config="dashboard.note.listConfig">
+					
+					<tbody>
+						<tr>
+							<td>
+								<input type="checkbox" ng-click="toggleActiveNote(item)" ng-checked="!item.is_active" /> <span ng-class="{done: !item.is_active}" ng-click="openModalEditNote(item)">## item.title ##</span>
+							</td>
+							<td class="delete">
+								<i class="fa fa-times" ng-click="openModalDeleteNote(item)"></i>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<a href="javascript:;" ng-click="openModalAddNewNote()" class="add-note-btn" title="Add new note"> +add</a>
 			</div>
 		</div>
-
 	</div>
 </div>

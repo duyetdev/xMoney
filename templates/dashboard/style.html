@@ -409,27 +409,7 @@ footer ul li { margin-top:0.5em }
   margin: 5px auto !important; 
 }
 
-/* NOTE LIST
-======================================== */
-.note-list {
-  border: 0;
-  color: #fff;
-  background: #36A9E1;
-  min-height: 350px;
-}
 
-.note-list .day {
-  font-size: 30px;
-  font-weight: 300;
-  text-transform: uppercase;
-  color: #fff;
-  padding: 15px;
-  padding-bottom: 30px;
-}
-.note-list .day span {
-  font-size: 14px;
-  display: block;
-}
 
 /* ADD CATEGORY MODAL 
 =========================================== */
@@ -701,6 +681,109 @@ footer ul li { margin-top:0.5em }
 .ats-switch.switch-default span.switch-left {
   color: #000;
   background: #eeeeee;
+}
+
+/* NOTE LIST
+======================================== */
+.note-list {
+  border: 0;
+  color: #fff;
+  background: #36A9E1;
+  min-height: 350px;
+}
+
+.note-list .day {
+  font-size: 30px;
+  font-weight: 300;
+  text-transform: uppercase;
+  color: #fff;
+  padding: 15px;
+  padding-bottom: 0;
+}
+.note-list .day span {
+  font-size: 14px;
+  display: block;
+}
+
+.add-note-btn {
+  color: #ffffff;
+  text-transform: lowercase;
+  float: right;
+  padding: 5px;
+
+}
+.notes-list {
+  
+}
+
+.notes-list, .notes-list>thead>tr>th, .notes-list>tbody>tr>td, .notes-list a {
+  border: 0;
+  background: #36A9E1;
+  color: #fff;
+}
+.notes-list>tbody>tr>td {
+  padding-bottom: 0;
+  padding-top: 3px;
+}
+.notes-list>thead>tr>th {
+  font-weight:800;
+}
+
+.notes-list thead {
+  background: #36A9E1;
+  color: #fff;
+}
+.notes-list thead>tr>th {
+  font-weight: 100;
+  border: 0;
+}
+.notes-list tr td.delete {
+  width:1%;
+}
+.notes-list input[type="checkbox"] {
+  position: relative;
+  top: -0;
+  margin: 0 1rem 0 0;
+  outline: none;
+  cursor: pointer;
+  border:0;
+  width: 1rem;
+  height: 1rem;
+}
+.notes-list input[type="checkbox"]:before, .notes-list input[type="checkbox"]:after {
+  -webkit-transition: all .4s ease-in-out;
+  /* For Safari 3.1 to 6.0 */
+  transition: all .4s ease-in-out;
+  content: "";
+  position: absolute;
+  top: -0;
+  left: -0;
+  z-index: 1;
+  width: 1rem;
+  height: 1rem;
+  background: #fff;
+  border: 1px solid #fff;
+}
+.notes-list input[type="checkbox"]:after {
+  z-index: 0;
+  border: none;
+}
+.notes-list input[type="checkbox"]:checked:before {
+  -webkit-transform: rotateY(180deg);
+  /* Chrome, Safari, Opera */
+  transform: rotateY(180deg);
+  background: #36A9E1;
+}
+
+.notes-list tr td.delete i {
+  opacity: 0;
+  cursor: pointer;
+}
+.notes-list tr:hover td.delete i {
+  opacity: 0.7;
+}
+.notes-list .done {
+  text-decoration: line-through;
 }
 
 </style>

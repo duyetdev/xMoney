@@ -1,0 +1,60 @@
+<div class="modal fade bs-add-note-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" >Add new note</h4>
+      </div>
+      <form class="form-horizontal" ng-submit="saveNewNote()" role="form">
+        <div class="modal-body">
+          
+          <p ng-if="dashboard.note.errors" class="alert alert-danger">
+           ## dashboard.note.errors ##
+          </p>
+          <div class="form-group">
+            <label for="notetitle" class="col-sm-3 control-label">Quick note (*)</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" ng-model='dashboard.note.data.title' id="notetitle" placeholder="Some quick note ...">
+              </span>
+            </div>
+            
+          </div>
+          <div class="form-group">
+            <label for="transval" class="col-sm-3 control-label">Write more (option)</label>
+            <div class="col-sm-8">
+              <textarea class="form-control" ng-model="dashboard.note.data.note" row="3"></textarea>
+            </div>
+          </div>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade bs-delete-note-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title">Confirm</h4>
+      </div>
+      <form>
+        <div class="modal-body">
+          
+         Are you sure to delete this note?
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" ng-click="deleteNote()">Delete</button>
+          <button type="submit" class="btn" data-dismiss="modal">Back</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -127,6 +127,8 @@ xmoneyApplication.controller('xmoney-dashboard-controller', ['$scope', '$http', 
 		end: (new Date()),
 	}
 
+	// Notes 
+	scope.dashboard.notes = [];
 
 	// List category
 	scope.dashboard.category = [];
@@ -273,48 +275,15 @@ xmoneyApplication.controller('xmoney-dashboard-controller', ['$scope', '$http', 
 				tablelog.load.month(scope.dashboard.logtable_date.getMonth()+1, scope.dashboard.logtable_date.getFullYear());
 			}
 		}
-		
-		/*
-		$('[name="transtype"]').bootstrapSwitch({
-			onColor:'primary', 
-			offColor:'warning', 
-
-			onText:'IN', 
-			offText:'OUT', 
-
-			animate: true,
-
-			onInit: function(event, state) {
-				scope.dashboard.transtype_switch = state
-				console.log(event, scope.dashboard.transtype_switch); 
-			}
-		});
-
-		$('[name="transtype"]').on('switchChange.bootstrapSwitch', function(event, state) {
-			console.log(this); // DOM element
-			console.log(event); // jQuery event
-			console.log(state); // true | false
-			scope.dashboard.transtype_switch = state;
-			console.log("Switch change: ", scope.dashboard.transtype_switch); 
-		});
-		*/
-
-
 	});
 
+	// ------------ LOAD USER -----------------
 	http.get(api+'/user').success(function(d){
 		scope.user = d;
 		console.log('Loaded user', d);
-	})
-	
-	/*
-	http.get(api+'/transaction').success(function(d){
-		scope.transaction = d;
-		console.log('Loaded list transaction', d);
 	});
-	*/	
-
-	// -------------- LOAD DATA --------------------
+	
+	// -------------- LOAD TRANSACTION DATA ---------------
 	scope.loadTransactionFromDate = function(day, month, year) {		
 		var d = new Date();
 
@@ -585,6 +554,114 @@ xmoneyApplication.controller('xmoney-dashboard-controller', ['$scope', '$http', 
 		return false;
 	}
 
+	// ------------- NOTES ------------------
+	scope.dashboard.note = {}
+
+	scope.loadNotesData = function() {
+		console.log('Loading notes data ....');
+		http.get(api+'/note/').success(function(d) {
+			console.log('All notes loaded.');
+			scope.dashboard.note.notes = d;
+		}).error(function(e) {
+			console.log('Load notes error. ', e);
+		});
+	}
+	// Auto load. 
+	scope.loadNotesData();
+
+	scope.dashboard.note.listConfig = {
+		itemsPerPage: 13,
+		fillLastPage: true
+	}
+
+	var repairNewDataNote = function(data) {
+		scope.dashboard.note.errors = null;
+
+		scope.dashboard.note.data = {
+			user: scope.user.id,
+			title: '',
+			note: '',
+			is_active: true,
+		}
+
+
+		if (data != null) 
+			scope.dashboard.note.data = data;
+	}
+
+	scope.openModalAddNewNote = function() {
+		repairNewDataNote();
+		$('.bs-add-note-modal-lg').modal('show');
+	}
+
+	scope.saveNewNote = function() {
+		if (!scope.dashboard.note.data.user) {
+			return scope.dashboard.note.errors = {'error': {'message':'System error, please reload application.'}}
+		}
+
+		if (!scope.dashboard.note.data.title) {
+			return scope.dashboard.note.errors = {'Quick note': {'message': 'This field is required.'}}	
+		}
+
+		// Edit note 
+		if (scope.dashboard.note.data.is_edit === true) {
+			http.put(api+'/note/'+scope.dashboard.note.data.note_id, scope.dashboard.note.data).success(function(d){
+				// Reload notes 
+				scope.loadNotesData();
+
+				// Hide modal 
+				$('.bs-add-note-modal-lg').modal('hide');
+			}).error(function(e){
+				console.log('Edit note error. ', e);
+				scope.dashboard.note.errors = e;
+			});
+
+		// Add new here 
+		} else {
+			http.post(api+'/note/', scope.dashboard.note.data).success(function(d){
+				// Reload notes 
+				scope.loadNotesData();
+
+				// Hide modal 
+				$('.bs-add-note-modal-lg').modal('hide');
+			}).error(function(e){
+				console.log('Save note error. ', e);
+				scope.dashboard.note.errors = e;
+			});
+		}
+	}
+
+	scope.toggleActiveNote = function(note_item) {
+		if (!note_item || !note_item.note_id) return false;
+		note_item.is_active = !note_item.is_active;
+		http.put(api+'/note/' + note_item.note_id+'/', note_item).success(function(d) {
+			scope.loadNotesData();
+		});
+	}
+
+	scope.openModalEditNote = function(item) {
+		repairNewDataNote(item);
+		scope.dashboard.note.data.is_edit = true;
+		$('.bs-add-note-modal-lg').modal('show');
+	}
+
+	scope.dashboard.note.delete_item = null;
+	scope.openModalDeleteNote = function(item) {
+		scope.dashboard.note.delete_item = item;
+		$('.bs-delete-note-modal-lg').modal('show');
+	}
+
+	scope.deleteNote = function() {
+		if (!scope.dashboard.note.delete_item) return false;
+		http.delete(api+'/note/' + scope.dashboard.note.delete_item.note_id+'/').success(function(d) {
+			scope.loadNotesData();
+		}).error(function(e){
+			setMessage('error', 'Something was wrong!');
+			console.log('Delete note error!');
+		});
+		$('.bs-delete-note-modal-lg').modal('hide');	
+	}
+
 	// ----------------- EVENTS -------------------------------
 	scope.openModalChooseEvent = function() {
 		$('.bs-choose-event-modal-lg').modal('show');
@@ -603,7 +680,6 @@ xmoneyApplication.controller('xmoney-dashboard-controller', ['$scope', '$http', 
 	scope.openModalManageCategory = function() {
 		$('.bs-manage-category-modal-lg').modal('show');
 		$('.bs-add-transaction-modal-lg').modal('hide');
-		
 	}
 
 	// Open Modal detail
