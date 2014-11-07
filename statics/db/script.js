@@ -177,7 +177,7 @@ xmoneyApplication.controller('xmoney-dashboard-controller', ['$scope', '$http', 
 		// call this from the developer console and you can control both instances
 		var calendars = {};
 		scope.dashboard.logtable_date = new Date(); //scope.date; // day picker from center calender 
-		scope.dashboard.logtable_type = 'day'; // day, month
+		scope.dashboard.logtable_type = 'month'; // day, month
 		$(document).ready( function() {
 
 		    // assuming you've got the appropriate language files,
@@ -370,7 +370,9 @@ xmoneyApplication.controller('xmoney-dashboard-controller', ['$scope', '$http', 
 			tablelog.load.month(scope.dashboard.logtable_date.getMonth()+1, scope.dashboard.logtable_date.getFullYear());
 		}
 	}
-	tablelog.load.today();
+	
+	// Auto load tablelog 
+	tablelog.reload();
 	
 
 	// Load list category -----------------
