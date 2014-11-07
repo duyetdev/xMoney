@@ -582,13 +582,13 @@ class Note(LoggedInRESTAPIView, GenericAPIView):
 	"""
 	serializer_class = serializers.NoteSerializer
 	def get(self, request):
-		note = models.Note.objects.filter(username=request.user.id)
+		note = models.Note.objects.filter(user=request.user.id)
 		serializer = self.serializer_class(note, many=True)
 		
 		return Response(serializer.data)
 
 	def post(self, request):
-
+		request.DATA['user'] = request.user.id
 		serializer = self.serializer_class(data=request.DATA)
 		if serializer.is_valid():
 			serializer.save() 
@@ -617,7 +617,8 @@ class NoteAction(LoggedInRESTAPIView, GenericAPIView):
 		return Response(serializer.data, status=status.HTTP_200_OK)
 
 	def put(self, request, pk):
-		note = self.get_object(pk)
+		request.DATA['user'] = request.user.id 
+		note = self.get_object(pk, request.user.id)
 		serializer = self.serializer_class(note, data=request.DATA)
 		if serializer.is_valid():
 			serializer.save()
