@@ -40,6 +40,10 @@ rect:hover {  fill:blue; }
 
 <div class="row">
   <div class="col-md-6">
+        <h3>Show report</h3>
+        <span>
+
+        </span>
   </div>
   <div class="col-md-6 right-chart">
     <center><div id='dashboard-chart'></div></center>
@@ -49,7 +53,7 @@ rect:hover {  fill:blue; }
 <script>
 function dashboard(id, fData){
     var barColor = 'steelblue';
-    function segColor(c){ return {income:"#807dba", expense:"#e08214",total:"#41ab5d"}[c]; }
+    function segColor(c){ return {income:"#41ab5d", expense:"#e08214",total:"#807dba"}[c]; }
     
     // compute total for each state.
     fData.forEach(function(d){d.total=d.freq.income+d.freq.expense+d.freq.total;});

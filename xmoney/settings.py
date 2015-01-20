@@ -67,7 +67,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     # min html
-    'htmlmin.middleware.HtmlMinifyMiddleware',
+    #'htmlmin.middleware.HtmlMinifyMiddleware',
 )
 
 ROOT_URLCONF = 'xmoney.urls'
@@ -78,8 +78,8 @@ WSGI_APPLICATION = 'xmoney.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'django_test',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'xmoney.db',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': '127.0.0.1',   # Or an IP Address that your DB is hosted on
@@ -98,7 +98,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)

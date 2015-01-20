@@ -117,9 +117,6 @@ xmoneyApplication.controller('xmoney-dashboard-controller', ['$scope', '$http', 
 	// New category object 
 	scope.dashboard.new_category = {}
 
-	// New Transaction object
-	scope.dashboard.new_transaction = {}
-
 	// mode display top stats
 	scope.dashboard.stat_overview_mode = 'last30day';
 	scope.dashboard.stat_overview_time = {
@@ -159,7 +156,7 @@ xmoneyApplication.controller('xmoney-dashboard-controller', ['$scope', '$http', 
 		var category_default_icon = 'fa-graduation-cap';
 		scope.dashboard.category_icon = category_default_icon;
 		$('#category-icon').iconpicker({ 
-			iconset: 'fa',
+			iconset: 'fontawesome',
 			icon: category_default_icon, 
 			rows: 6,
 			cols: 8,
@@ -268,12 +265,9 @@ xmoneyApplication.controller('xmoney-dashboard-controller', ['$scope', '$http', 
 
 		scope.changeLogTableType = function(type) {
 			scope.dashboard.logtable_type = type;
+			
 			// Reload data table 
-			if (type == 'day') {
-				tablelog.load.day(scope.dashboard.logtable_date.getDate(), scope.dashboard.logtable_date.getMonth()+1, scope.dashboard.logtable_date.getFullYear());
-			} else {
-				tablelog.load.month(scope.dashboard.logtable_date.getMonth()+1, scope.dashboard.logtable_date.getFullYear());
-			}
+			tablelog.reload();
 		}
 	});
 
@@ -290,8 +284,6 @@ xmoneyApplication.controller('xmoney-dashboard-controller', ['$scope', '$http', 
 		day = day || 0;
 		month = month || d.getMonth()+1;
 		year = year || d.getFullYear();
-
-		console.log("LOOOOOO", day);
 
 		var reqUrl = api+'/transaction/?';
 		if (day !== 0)
@@ -407,54 +399,12 @@ xmoneyApplication.controller('xmoney-dashboard-controller', ['$scope', '$http', 
 		$('.bs-choose-category-modal-lg').modal('hide');	
 	}
 
-	// ------------ ADD NEW TRANSACTION -------------
-	var repairNewDataTransaction = function() {
-		scope.dashboard.new_transaction = {
-			user: scope.user.id || 0,
-			category: {'id': 0, 'text':'Select category', 'icon':'fa-plus'},
+	// ------------ TRANSACTION -------------
+	// Transaction object
+	scope.dashboard.transaction = {};
+	
 
-		}
-	}
-	scope.openModalNewTransaction = function() {
-		repairNewDataTransaction();
-
-		$('.bs-add-transaction-modal-lg').modal('show');
-	}
-
-	scope.saveNewTransaction = function() {
-		if (scope.dashboard.transtype_switch == true) 
-			var transtype = 'in';
-		else
-			var transtype = 'ex';
-		var data = {
-			'user': scope.user.id, 
-			'category': scope.dashboard.new_transaction.category.id, 
-			'unit': 'vnd', 
-			'transaction_type': transtype,
-			'value': scope.dashboard.new_transaction.value,
-			'note': scope.dashboard.new_transaction.note,
-			// ..........
-		}
-		http.post(api+'/transaction/', data).success(function(d) {
-			// Message about success
-			setMessage('success', 'Success!')
-
-			// Close modal add transaction
-			$('.bs-add-transaction-modal-lg').modal('hide');
-
-			// Reload all data
-			scope.loadStatOverview(scope.dashboard.stat_overview_mode);
-			repairNewDataTransaction();
-			tablelog.reload();
-		}).error(function(e){
-			console.log('Have some error');
-			scope.dashboard.new_transaction_error = e;
-			console.log(e);
-		})
-	}
-
-
-	// ------------------- EDIT TRANSACTION ---------------------
+	// Get category from id 
 	var getCategoryFromId = function(cat_id) {
 		console.log("Get category from id ", cat_id);
 		if (!scope.dashboard.category) {
@@ -472,32 +422,109 @@ xmoneyApplication.controller('xmoney-dashboard-controller', ['$scope', '$http', 
 		console.log("getCategoryFromId -> Not found!");
 		return {description: "Other", icon: "", id: 0, text: "Other", transaction_type: "ex", user_id: 0};
 	}
+
+	// Repair data to send req
+	var repairNewDataTransaction = function(d) {
+		scope.dashboard.transaction.data = {
+			user: scope.user.id || 0,
+			category: {'id': 0, 'text':'Select category', 'icon':'fa-plus'},
+		}
+
+		if (d!=null) 
+			scope.dashboard.transaction.data = d;
+
+		console.log('Repair data to add new.', scope.dashboard.transaction.data);
+	}
+
+	// Open modal add new transaction
+	scope.openModalNewTransaction = function() {
+		repairNewDataTransaction();
+
+		$('.bs-add-transaction-modal-lg').modal('show');
+	}
+
+	// Save new transaction
+	scope.saveNewTransaction = function() {
+		if (scope.dashboard.transtype_switch == true) 
+			var transtype = 'in';
+		else
+			var transtype = 'ex';
+		var data = {
+			'user': scope.user.id, 
+			'category': scope.dashboard.transaction.data.category.id, 
+			'unit': 'vnd', 
+			'transaction_type': transtype,
+			'value': scope.dashboard.transaction.data.value,
+			'note': scope.dashboard.transaction.data.note,
+			// ..........
+		}
+		http.post(api+'/transaction/', data).success(function(d) {
+			// Message about success
+			setMessage('success', 'Success!')
+
+			// Close modal add transaction
+			$('.bs-add-transaction-modal-lg').modal('hide');
+
+			// Reload all data
+			scope.loadStatOverview(scope.dashboard.stat_overview_mode);
+			repairNewDataTransaction();
+			tablelog.reload();
+		}).error(function(e){
+			console.log('Have some error');
+			scope.dashboard.transaction.errors = e;
+			console.log(e);
+		})
+	}
+
+
+	// Edit transaction
+	scope.dashboard.transaction.is_edit = null;
 	scope.openModalEditTransaction = function(item) {
-		console.log('openModalEditTransaction', item);
-		scope.dashboard.edit_transaction = item;
-		scope.dashboard.new_transaction.category = getCategoryFromId(item.category);
+		console.log('Open modal editTransaction', item);
+		repairNewDataTransaction(item);
+
 		$('.bs-edit-transaction-modal-lg').modal('show');
 	}
 
 	scope.editTransaction = function() {
-		var data = {
-
-		}
-
-		// Send request to update 
-
-		// If success 
 		
-		// If error 
-		
-		// Reset data 
 	
+	}
+	
+	// Delete transaction
+	scope.deleteConfim = function() {
+		if (!scope.dashboard.transaction.data) return false;
+		// scope.dashboard.edit_transaction
+		$('.bs-edit-transaction-modal-lg').modal('hide');
+		$('.bs-delete-confirm-modal-lg').modal('show');
+	}
+	scope.deleteTransaction = function() {
+		if (!scope.dashboard.transaction.data) return false;
+
+		var deleted = null;
+
+		http.delete(api+'/transaction/' +scope.dashboard.transaction.data.transaction_id+'/').success(function(d){
+			console.log('Delete transaction', d);	
+			setMessage('success', 'Delete success!');
+			tablelog.reload();
+			scope.dashboard.edit_transaction = false;
+			// Hide modal
+			$('.bs-delete-confirm-modal-lg').modal('hide');
+			scope.loadStatOverview(scope.dashboard.stat_overview_mode);
+		}).error(function(d){
+			setMessage('error', 'Delete transaction was fail!');
+			$('.bs-delete-confirm-modal-lg').modal('hide');
+		});	
+
+
+		return false;
 	}
 
 	// ------------------- CATEGORY -----------------
 
 	scope.chooseCategory = function(i) {
-		scope.dashboard.new_transaction.category = i;
+		scope.dashboard.transaction.data.category = i; 
+		console.log('Choose category', scope.dashboard.transaction, 'item', i);
 		$('.bs-choose-category-modal-lg').modal('hide');
 		$('.bs-add-transaction-modal-lg').modal('show');
 	}
@@ -514,7 +541,7 @@ xmoneyApplication.controller('xmoney-dashboard-controller', ['$scope', '$http', 
 				'icon': scope.dashboard.category_icon,
 			}
 			http.post(api+'/category/', data).success(function(d){
-				scope.dashboard.new_transaction.category = d;
+				scope.dashboard.transaction.data.category = d;
 
 				// Reload category list 
 				scope.loadCategory();
@@ -525,33 +552,6 @@ xmoneyApplication.controller('xmoney-dashboard-controller', ['$scope', '$http', 
 				scope.dashboard.new_category.error = e;
 			});
 		}
-	}
-
-	// -------------- DELETE TRANSACTION -----------------
-
-	scope.deleteConfim = function() {
-		// scope.dashboard.edit_transaction
-		$('.bs-edit-transaction-modal-lg').modal('hide');
-		$('.bs-delete-confirm-modal-lg').modal('show');
-	}
-	scope.deleteTransaction = function() {
-		var deleted = null;
-		if (scope.dashboard.edit_transaction) {
-			http.delete(api+'/transaction/' +scope.dashboard.edit_transaction.transaction_id+'/').success(function(d){
-				console.log('Delete transaction', d);	
-				setMessage('success', 'Delete success!');
-				loadTodayTransaction();
-				scope.dashboard.edit_transaction = false;
-				// Hide modal
-				$('.bs-delete-confirm-modal-lg').modal('hide');
-				scope.loadStatOverview(scope.dashboard.stat_overview_mode);
-			}).error(function(d){
-				setMessage('error', 'Delete transaction was fail!');
-				$('.bs-delete-confirm-modal-lg').modal('hide');
-			});	
-		}
-
-		return false;
 	}
 
 	// ------------- NOTES ------------------
@@ -584,7 +584,6 @@ xmoneyApplication.controller('xmoney-dashboard-controller', ['$scope', '$http', 
 			is_active: true,
 		}
 
-
 		if (data != null) 
 			scope.dashboard.note.data = data;
 	}
@@ -592,6 +591,11 @@ xmoneyApplication.controller('xmoney-dashboard-controller', ['$scope', '$http', 
 	scope.openModalAddNewNote = function() {
 		repairNewDataNote();
 		$('.bs-add-note-modal-lg').modal('show');
+	}
+
+	scope.openModalViewNote = function(item) {
+		scope.dashboard.note.viewnote = item;
+		$('.bs-view-note-modal-lg').modal('show');
 	}
 
 	scope.saveNewNote = function() {

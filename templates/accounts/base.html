@@ -1,4 +1,4 @@
-{% load staticfiles %}{% load i18n %}<!DOCTYPE html>
+{% load gravatar %}{% load staticfiles %}{% load i18n %}<!DOCTYPE html>
 <html ng-app='xmoney-app'>
 	<head>
 		<meta charset="utf-8">
@@ -68,7 +68,7 @@
 					<p class="section-description text-center"> </p>
 					<div class="row member-content">
 						<div class="col-sm-3 col-xs-4 col-sm-offset-1 member-thumb  fade-right in">
-							<img class="img-responsive img-center img-thumbnail img-circle" style="margin-top: 2em;" src="{% static 'accounts/User_for_snippets.png' %}" class="img-circle" alt="">
+							<img class="img-responsive img-center img-thumbnail img-circle" style="margin-top: 2em;" src="{% gravatar_url 'lvduit08@gmail.com' %}" class="img-circle" alt="{% static 'accounts/User_for_snippets.png' %}">
 							<h4># {{user.username}}</h4>
 							<p class="title"></p>
 						</div>

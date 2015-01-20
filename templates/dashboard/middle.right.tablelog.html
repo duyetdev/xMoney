@@ -27,7 +27,7 @@
 						## item.transaction_type == 'in'? '+' : item.value >= 0 ? '-' : '' ## ## item.value | number ##
 					</td>
 					<td at-sortable at-attribute="category" style="text-align:left">
-						<i ng-show="item.category.icon" class="## item.category.substring(0,2) == 'fa' ? 'fa' : 'glyphicon' ## ## item.category.icon ##"></i> ## item.category.text ##
+						<i ng-show="item.category.icon" class="## item.category.substring(0,2) == 'fa-' ? 'fa' : 'glyphicon' ## ## item.category.icon ##"></i> ## item.category.text ##
 					</td>
 					<td at-attribute="note">
 						## item.note ##

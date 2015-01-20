@@ -14,7 +14,7 @@
 					<tbody>
 						<tr>
 							<td>
-								<input type="checkbox" ng-click="toggleActiveNote(item)" ng-checked="!item.is_active" /> <span ng-class="{done: !item.is_active}" ng-click="openModalEditNote(item)">## item.title ##</span>
+								<input type="checkbox" ng-click="toggleActiveNote(item)" ng-checked="!item.is_active" /> <span ng-class="{done: !item.is_active}" ng-click="openModalViewNote(item)">## item.title ##</span>
 							</td>
 							<td class="delete">
 								<i class="fa fa-times" ng-click="openModalDeleteNote(item)"></i>

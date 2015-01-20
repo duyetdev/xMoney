@@ -2,12 +2,12 @@
 	<div class="col-lg-6 stat-over-view-choose">
 		<a href="#last7day" ng-class="{current:dashboard.stat_overview_mode=='last7day'}" ng-click="loadStatOverview('last7day')">Last 7 days</a>
 		<a href="#last30day" ng-class="{current:dashboard.stat_overview_mode=='last30day'}" ng-click="loadStatOverview('last30day')">Last 30 days</a>
-		<a href="#thismonth" ng-class="{current:dashboard.stat_overview_mode=='thismonth'}" ng-click="loadStatOverview('thismonth')">This month</a>
+		<a href="#thismonth" ng-class="{current:dashboard.stat_overview_mode=='thismonth'}" ng-click="loadStatOverview('thismonth')"><!-- This month --></a>
 
 		<span class="time-rangle">(## dashboard.stat_overview_time.start | date:'dd/MM/yyyy' ## - ## dashboard.stat_overview_time.end | date:'dd/MM/yyyy' ##)</span>
 	</div>
 	<div class="col-lg-6 add-new-transaction text-right">
-		<a href="#add-new-transaction" ng-click="openModalNewTransaction()">+ transaction </a>
+		<a href="javascript:;" ng-click="openModalNewTransaction()">+ transaction </a>
 	</div>
 </div>
 <div class="row">

@@ -1,0 +1,22 @@
+<div class="modal fade bs-view-note-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title"><span ng-bind="dashboard.note.viewnote.title" ng-class="{done: !dashboard.note.viewnote.is_active}">Note title</span></h4>
+      </div>
+      <form class="form-horizontal" role="form" ng-init="showOptionFields = false">
+        <div class="modal-body">
+          
+            <p ng-bind="dashboard.note.viewnote.note">
+              
+            </p>
+            
+          
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
